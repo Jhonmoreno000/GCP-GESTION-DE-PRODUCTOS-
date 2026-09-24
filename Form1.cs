@@ -12,7 +12,6 @@ namespace WinFormsApp1
     /// </summary>
     public partial class GPC : Form
     {
-        // Carrito de compras temporal en memoria
         private readonly List<DetalleVenta> _carritoActual = new();
 
         public GPC()
@@ -23,17 +22,10 @@ namespace WinFormsApp1
 
         private void GPC_Load(object? sender, EventArgs e)
         {
-            // Configurar columnas de las tablas y activar eventos de pintura personalizada (badges)
             ConfigurarColumnasTablas();
             ConfigurarPinturaPersonalizadaTablas();
-
-            // Cargar datos en todos los módulos y refrescar métricas
             RefrescarTodo();
-
-            // Iniciar en el módulo de Dashboard
             MostrarModulo("dashboard");
-
-            // Actualizar la hora en el encabezado
             ActualizarReloj();
         }
 
@@ -41,9 +33,6 @@ namespace WinFormsApp1
         // NAVEGACIÓN Y EFECTOS VISUALES ENTRE MÓDULOS
         // =========================================================================
 
-        /// <summary>
-        /// Muestra el panel seleccionado, actualiza títulos y anima la barra indicadora lateral.
-        /// </summary>
         private void MostrarModulo(string modulo)
         {
             panelDashboard.Visible = false;
@@ -51,65 +40,47 @@ namespace WinFormsApp1
             panelVentas.Visible = false;
             panelHistorial.Visible = false;
 
-            RestablecerEstiloBotonesNav();
+            btnNavDashboard.EstaActivo = false;
+            btnNavInventario.EstaActivo = false;
+            btnNavVentas.EstaActivo = false;
+            btnNavHistorial.EstaActivo = false;
 
             switch (modulo.ToLower())
             {
                 case "dashboard":
                     panelDashboard.Visible = true;
-                    lblTituloModulo.Text = "📊 Dashboard y Métricas en Tiempo Real";
+                    btnNavDashboard.EstaActivo = true;
+                    lblTituloModulo.Text = "Dashboard y Métricas en Tiempo Real";
                     lblSubtituloModulo.Text = "Gráficas interactivas, balance de stock y alertas críticas";
-                    ActivarBotonNav(btnNavDashboard);
                     ActualizarMetricasDashboard();
-                    // Disparar animación de crecimiento de las gráficas
                     graficaBarras.IniciarAnimacion();
                     graficaDona.IniciarAnimacion();
                     break;
 
                 case "inventario":
                     panelInventario.Visible = true;
-                    lblTituloModulo.Text = "📦 Gestión Integral de Inventario";
+                    btnNavInventario.EstaActivo = true;
+                    lblTituloModulo.Text = "Gestión Integral de Inventario";
                     lblSubtituloModulo.Text = "Catálogo de productos, control de stock y edición ágil";
-                    ActivarBotonNav(btnNavInventario);
                     CargarTablaProductos(GestorDatos.Instancia.Productos);
                     break;
 
                 case "ventas":
                     panelVentas.Visible = true;
-                    lblTituloModulo.Text = "🛒 Punto de Venta (POS Inteligente)";
+                    btnNavVentas.EstaActivo = true;
+                    lblTituloModulo.Text = "Punto de Venta (POS Inteligente)";
                     lblSubtituloModulo.Text = "Facturación ágil, descuento automático de inventario y recibo digital";
-                    ActivarBotonNav(btnNavVentas);
                     CargarComboProductosVenta();
                     break;
 
                 case "historial":
                     panelHistorial.Visible = true;
-                    lblTituloModulo.Text = "📋 Auditoría y Registro de Ventas";
+                    btnNavHistorial.EstaActivo = true;
+                    lblTituloModulo.Text = "Auditoría y Registro de Ventas";
                     lblSubtituloModulo.Text = "Historial completo de comprobantes y recaudación";
-                    ActivarBotonNav(btnNavHistorial);
                     CargarTablaHistorial();
                     break;
             }
-        }
-
-        private void RestablecerEstiloBotonesNav()
-        {
-            var botones = new[] { btnNavDashboard, btnNavInventario, btnNavVentas, btnNavHistorial };
-            foreach (var b in botones)
-            {
-                b.BackColor = Color.Transparent;
-                b.ForeColor = Color.FromArgb(203, 213, 225);
-            }
-        }
-
-        private void ActivarBotonNav(Button btn)
-        {
-            btn.BackColor = Color.FromArgb(30, 41, 59); // Slate 800 suave
-            btn.ForeColor = Color.White;
-
-            // Animar / desplazar el indicador visual lateral hacia la posición del botón activo
-            panelIndicadorNav.Top = btn.Top;
-            panelIndicadorNav.BringToFront();
         }
 
         private void ActualizarReloj()
@@ -118,7 +89,7 @@ namespace WinFormsApp1
         }
 
         // =========================================================================
-        // CONFIGURACIÓN DE TABLAS Y BADGES (EFECTOS ESPECIALES DE DISEÑO)
+        // CONFIGURACIÓN DE TABLAS Y BADGES (PASTILLAS VISUALES)
         // =========================================================================
 
         private void ConfigurarColumnasTablas()
@@ -187,9 +158,6 @@ namespace WinFormsApp1
             dgvHistorialVentas.Columns["Articulos"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
 
-        /// <summary>
-        /// Vincula el evento CellPainting para renderizar badges (pastillas) redondeadas modernas en lugar de texto plano.
-        /// </summary>
         private void ConfigurarPinturaPersonalizadaTablas()
         {
             dgvProductos.CellPainting += (s, e) =>
@@ -244,9 +212,6 @@ namespace WinFormsApp1
             };
         }
 
-        /// <summary>
-        /// Dibuja una pastilla (pill badge) suave con esquinas redondeadas y texto centrado.
-        /// </summary>
         private void DibujarPillBadge(Graphics g, Rectangle cellBounds, string texto, Color fondo, Color textoColor)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
@@ -277,46 +242,54 @@ namespace WinFormsApp1
             var productos = GestorDatos.Instancia.Productos;
             var ventas = GestorDatos.Instancia.Ventas;
 
-            // 1. KPIs
-            lblKpiTotalProductos.Text = productos.Count.ToString();
-            int criticos = productos.Count(p => p.TieneStockBajo);
-            lblKpiStockBajo.Text = criticos.ToString();
-            decimal sumaVentas = ventas.Sum(v => v.TotalVenta);
-            lblKpiTotalVentas.Text = $"${sumaVentas:N2}";
-            lblKpiNumVentas.Text = ventas.Count.ToString();
+            // 1. Tarjetas KPI
+            cardKpiProductos.Valor = productos.Count.ToString();
 
-            // 2. Gráfica de Barras por Categoría (Calcula el stock total disponible por categoría)
-            var paletaColores = new[]
+            int criticos = productos.Count(p => p.TieneStockBajo);
+            cardKpiStockCritico.Valor = criticos.ToString();
+            cardKpiStockCritico.Subtitulo = criticos > 0 ? $"{criticos} productos en riesgo" : "Inventario óptimo";
+
+            decimal sumaVentas = ventas.Sum(v => v.TotalVenta);
+            cardKpiVentas.Valor = $"${sumaVentas:N2}";
+
+            cardKpiTransacciones.Valor = ventas.Count.ToString();
+
+            // 2. Gráfica de Barras por Categoría (Paleta armónica moderna con degradados)
+            var gradientes = new[]
             {
-                Color.FromArgb(99, 102, 241),  // Indigo
-                Color.FromArgb(6, 182, 212),   // Cyan
-                Color.FromArgb(16, 185, 129),  // Esmeralda
-                Color.FromArgb(245, 158, 11),  // Ámbar
-                Color.FromArgb(236, 72, 153),  // Rosa
-                Color.FromArgb(139, 92, 246)   // Violeta
+                (Color.FromArgb(99, 102, 241), Color.FromArgb(129, 140, 248)), // Índigo a Violeta suave
+                (Color.FromArgb(14, 165, 233), Color.FromArgb(56, 189, 248)),  // Cian / Cielo
+                (Color.FromArgb(16, 185, 129), Color.FromArgb(52, 211, 153)),  // Esmeralda
+                (Color.FromArgb(245, 158, 11), Color.FromArgb(251, 191, 36)),  // Ámbar
+                (Color.FromArgb(139, 92, 246), Color.FromArgb(167, 139, 250))  // Púrpura
             };
 
             var datosPorCategoria = productos
                 .GroupBy(p => p.Categoria)
-                .Select((g, index) => new BarraDato
+                .Select((g, index) =>
                 {
-                    Etiqueta = g.Key,
-                    Valor = g.Sum(p => p.Stock),
-                    ValorFormateado = $"{g.Sum(p => p.Stock)} unidades",
-                    ColorBarra = paletaColores[index % paletaColores.Length]
+                    var gradiente = gradientes[index % gradientes.Length];
+                    return new BarraDato
+                    {
+                        Etiqueta = g.Key,
+                        Valor = g.Sum(p => p.Stock),
+                        ValorFormateado = $"{g.Sum(p => p.Stock)} unidades",
+                        ColorInicio = gradiente.Item1,
+                        ColorFin = gradiente.Item2
+                    };
                 })
                 .OrderByDescending(b => b.Valor)
                 .ToList();
 
             graficaBarras.CargarDatos(datosPorCategoria);
 
-            // 3. Gráfica de Dona: Porcentaje de productos con stock óptimo
+            // 3. Gráfica de Dona
             float porcentajeSaludable = productos.Count > 0
                 ? ((productos.Count - criticos) * 100f / productos.Count)
                 : 100f;
             graficaDona.PorcentajeOptimo = porcentajeSaludable;
 
-            // 4. Llenar tabla de alerta de stock bajo
+            // 4. Tabla de alertas
             dgvDashboardStockBajo.Rows.Clear();
             foreach (var p in productos.Where(p => p.TieneStockBajo))
             {
@@ -329,6 +302,8 @@ namespace WinFormsApp1
                     p.Stock == 0 ? "Agotado" : "Stock Bajo"
                 );
             }
+
+            dgvDashboardStockBajo.ClearSelection();
         }
 
         // =========================================================================
@@ -352,6 +327,7 @@ namespace WinFormsApp1
                     estado
                 );
             }
+            dgvProductos.ClearSelection();
         }
 
         private void FiltrarInventario()
@@ -396,7 +372,7 @@ namespace WinFormsApp1
                     numStockMinimo.Value = prod.StockMinimo;
 
                     txtCodigo.Enabled = false;
-                    btnGuardarProducto.Text = "🔄 Actualizar Producto";
+                    btnGuardarProducto.Text = "Actualizar Producto";
                 }
             }
         }
@@ -471,7 +447,7 @@ namespace WinFormsApp1
             numPrecioVenta.Value = 0;
             numStock.Value = 0;
             numStockMinimo.Value = 5;
-            btnGuardarProducto.Text = "💾 Guardar Producto";
+            btnGuardarProducto.Text = "Guardar Producto";
             txtCodigo.Focus();
         }
 
@@ -501,7 +477,7 @@ namespace WinFormsApp1
                 if (seleccionado.Stock <= 0)
                 {
                     lblVentaStockDisponible.ForeColor = Color.FromArgb(239, 68, 68);
-                    lblVentaStockDisponible.Text = "⚠️ AGOTADO (Sin stock)";
+                    lblVentaStockDisponible.Text = "AGOTADO (Sin stock)";
                 }
                 else if (seleccionado.TieneStockBajo)
                 {
@@ -627,7 +603,7 @@ namespace WinFormsApp1
             if (GestorDatos.Instancia.RegistrarVenta(nuevaVenta, out string error))
             {
                 MessageBox.Show(
-                    $"🎉 ¡Venta procesada con éxito!\n\n" +
+                    $"¡Venta procesada con éxito!\n\n" +
                     $"N° Recibo: {nuevaVenta.IdVenta}\n" +
                     $"Cliente: {nuevaVenta.Cliente}\n" +
                     $"Método de Pago: {nuevaVenta.MetodoPago}\n" +
@@ -668,6 +644,7 @@ namespace WinFormsApp1
                     v.TotalVenta
                 );
             }
+            dgvHistorialVentas.ClearSelection();
         }
 
         private void RefrescarTodo()

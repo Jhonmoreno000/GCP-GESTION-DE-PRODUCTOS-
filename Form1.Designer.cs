@@ -10,7 +10,6 @@ namespace WinFormsApp1
         /// <summary>
         /// Limpia los recursos que se estén utilizando.
         /// </summary>
-        /// <param name="disposing">true si los recursos administrados se deben desechar; false en caso contrario.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -23,98 +22,114 @@ namespace WinFormsApp1
         #region Código generado por el Diseñador de Windows Forms
 
         /// <summary>
-        /// Método necesario para admitir el Diseñador.
-        /// Configura una interfaz gráfica moderna, responsiva, con paleta refinada y controles visuales avanzados.
+        /// Método de inicialización visual de componentes con arquitectura responsiva y teoría de color.
         /// </summary>
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
 
-            // Configuración del Formulario Principal
             this.SuspendLayout();
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1240, 780);
-            this.MinimumSize = new System.Drawing.Size(1080, 680);
+            this.ClientSize = new System.Drawing.Size(1220, 760);
+            this.MinimumSize = new System.Drawing.Size(1060, 660);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "GCP • Sistema Inteligente de Gestión de Productos e Inventario";
-            this.BackColor = System.Drawing.Color.FromArgb(248, 250, 252); // Fondo Slate suave
+            this.Text = "GCP STUDIO • Sistema Inteligente de Gestión de Productos";
+            this.BackColor = System.Drawing.Color.FromArgb(248, 250, 252);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 
             // =========================================================================
-            // 1. BARRA LATERAL (SIDEBAR ELEGANTE CON INDICADOR ACTIVO Y EFECTOS)
+            // 1. BARRA LATERAL (SIDEBAR PROFESIONAL CON BOTONES VECTORIALES)
             // =========================================================================
             this.panelSidebar = new System.Windows.Forms.Panel();
             this.panelLogo = new System.Windows.Forms.Panel();
-            this.lblLogoIcon = new System.Windows.Forms.Label();
+            this.pnlLogoBadge = new System.Windows.Forms.Panel();
+            this.lblLogoBadgeText = new System.Windows.Forms.Label();
             this.lblLogoTitulo = new System.Windows.Forms.Label();
             this.lblLogoSubtitulo = new System.Windows.Forms.Label();
-            this.panelIndicadorNav = new System.Windows.Forms.Panel();
-            this.btnNavDashboard = new System.Windows.Forms.Button();
-            this.btnNavInventario = new System.Windows.Forms.Button();
-            this.btnNavVentas = new System.Windows.Forms.Button();
-            this.btnNavHistorial = new System.Windows.Forms.Button();
+
+            this.btnNavDashboard = new WinFormsApp1.UI.BotonSidebar();
+            this.btnNavInventario = new WinFormsApp1.UI.BotonSidebar();
+            this.btnNavVentas = new WinFormsApp1.UI.BotonSidebar();
+            this.btnNavHistorial = new WinFormsApp1.UI.BotonSidebar();
             this.lblVersion = new System.Windows.Forms.Label();
 
-            // Estilos del Sidebar: Midnight Slate 900
+            // Fondo Midnight Slate 900
             this.panelSidebar.BackColor = System.Drawing.Color.FromArgb(15, 23, 42);
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelSidebar.Width = 240;
+            this.panelSidebar.Width = 230;
             this.panelSidebar.Padding = new System.Windows.Forms.Padding(0);
 
             // Panel de Marca / Logo superior
             this.panelLogo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelLogo.Height = 105;
+            this.panelLogo.Height = 100;
             this.panelLogo.BackColor = System.Drawing.Color.FromArgb(11, 17, 32);
 
-            this.lblLogoIcon.Text = "⚡";
-            this.lblLogoIcon.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblLogoIcon.ForeColor = System.Drawing.Color.FromArgb(99, 102, 241); // Indigo eléctrico
-            this.lblLogoIcon.Location = new System.Drawing.Point(16, 22);
-            this.lblLogoIcon.Size = new System.Drawing.Size(46, 50);
+            // Badge con las siglas GCP en Índigo Eléctrico
+            this.pnlLogoBadge.Location = new System.Drawing.Point(16, 26);
+            this.pnlLogoBadge.Size = new System.Drawing.Size(42, 42);
+            this.pnlLogoBadge.BackColor = System.Drawing.Color.FromArgb(99, 102, 241);
+
+            this.lblLogoBadgeText.Text = "GCP";
+            this.lblLogoBadgeText.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.lblLogoBadgeText.ForeColor = System.Drawing.Color.White;
+            this.lblLogoBadgeText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLogoBadgeText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.pnlLogoBadge.Controls.Add(this.lblLogoBadgeText);
 
             this.lblLogoTitulo.Text = "GCP STUDIO";
-            this.lblLogoTitulo.Font = new System.Drawing.Font("Segoe UI", 13.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblLogoTitulo.Font = new System.Drawing.Font("Segoe UI", 12.5F, System.Drawing.FontStyle.Bold);
             this.lblLogoTitulo.ForeColor = System.Drawing.Color.White;
             this.lblLogoTitulo.Location = new System.Drawing.Point(66, 26);
-            this.lblLogoTitulo.Size = new System.Drawing.Size(165, 26);
+            this.lblLogoTitulo.Size = new System.Drawing.Size(155, 24);
 
-            this.lblLogoSubtitulo.Text = "Control de Inventario & POS";
-            this.lblLogoSubtitulo.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblLogoSubtitulo.Text = "Gestión de Inventario";
+            this.lblLogoSubtitulo.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lblLogoSubtitulo.ForeColor = System.Drawing.Color.FromArgb(148, 163, 184);
-            this.lblLogoSubtitulo.Location = new System.Drawing.Point(68, 52);
-            this.lblLogoSubtitulo.Size = new System.Drawing.Size(160, 20);
+            this.lblLogoSubtitulo.Location = new System.Drawing.Point(68, 50);
+            this.lblLogoSubtitulo.Size = new System.Drawing.Size(150, 18);
 
-            this.panelLogo.Controls.Add(this.lblLogoIcon);
+            this.panelLogo.Controls.Add(this.pnlLogoBadge);
             this.panelLogo.Controls.Add(this.lblLogoTitulo);
             this.panelLogo.Controls.Add(this.lblLogoSubtitulo);
 
-            // Indicador vertical flotante de botón activo (Efecto especial)
-            this.panelIndicadorNav.Width = 5;
-            this.panelIndicadorNav.Height = 44;
-            this.panelIndicadorNav.Left = 0;
-            this.panelIndicadorNav.Top = 120;
-            this.panelIndicadorNav.BackColor = System.Drawing.Color.FromArgb(99, 102, 241);
+            // Botones vectoriales de la barra lateral con iconos integrados
+            this.btnNavDashboard.Text = "Dashboard";
+            this.btnNavDashboard.Icono = "dashboard";
+            this.btnNavDashboard.Top = 115;
+            this.btnNavDashboard.Left = 8;
+            this.btnNavDashboard.Width = 214;
 
-            // Botones de navegación en la barra lateral con hover reactivo
-            EstilizarBotonSidebar(this.btnNavDashboard, "📊   Dashboard", 120);
-            EstilizarBotonSidebar(this.btnNavInventario, "📦   Inventario", 175);
-            EstilizarBotonSidebar(this.btnNavVentas, "🛒   Punto de Venta", 230);
-            EstilizarBotonSidebar(this.btnNavHistorial, "📋   Historial Ventas", 285);
+            this.btnNavInventario.Text = "Inventario";
+            this.btnNavInventario.Icono = "inventario";
+            this.btnNavInventario.Top = 168;
+            this.btnNavInventario.Left = 8;
+            this.btnNavInventario.Width = 214;
+
+            this.btnNavVentas.Text = "Punto de Venta";
+            this.btnNavVentas.Icono = "ventas";
+            this.btnNavVentas.Top = 221;
+            this.btnNavVentas.Left = 8;
+            this.btnNavVentas.Width = 214;
+
+            this.btnNavHistorial.Text = "Historial Ventas";
+            this.btnNavHistorial.Icono = "historial";
+            this.btnNavHistorial.Top = 274;
+            this.btnNavHistorial.Left = 8;
+            this.btnNavHistorial.Width = 214;
 
             this.btnNavDashboard.Click += (s, e) => MostrarModulo("dashboard");
             this.btnNavInventario.Click += (s, e) => MostrarModulo("inventario");
             this.btnNavVentas.Click += (s, e) => MostrarModulo("ventas");
             this.btnNavHistorial.Click += (s, e) => MostrarModulo("historial");
 
-            this.lblVersion.Text = "v2.0 • .NET 8 • WinForms UI";
+            this.lblVersion.Text = "v2.0 • .NET 8 • WinForms";
             this.lblVersion.ForeColor = System.Drawing.Color.FromArgb(100, 116, 139);
-            this.lblVersion.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.lblVersion.Font = new System.Drawing.Font("Segoe UI", 7.8F);
             this.lblVersion.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblVersion.Height = 35;
             this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 
-            this.panelSidebar.Controls.Add(this.panelIndicadorNav);
             this.panelSidebar.Controls.Add(this.lblVersion);
             this.panelSidebar.Controls.Add(this.btnNavHistorial);
             this.panelSidebar.Controls.Add(this.btnNavVentas);
@@ -123,7 +138,7 @@ namespace WinFormsApp1
             this.panelSidebar.Controls.Add(this.panelLogo);
 
             // =========================================================================
-            // 2. ENCABEZADO SUPERIOR (HEADER MODERNO RESPONSIVO)
+            // 2. ENCABEZADO SUPERIOR (HEADER LIMPIO)
             // =========================================================================
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblTituloModulo = new System.Windows.Forms.Label();
@@ -132,20 +147,20 @@ namespace WinFormsApp1
             this.lblUsuario = new System.Windows.Forms.Label();
 
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Height = 72;
+            this.panelHeader.Height = 70;
             this.panelHeader.BackColor = System.Drawing.Color.White;
-            this.panelHeader.Padding = new System.Windows.Forms.Padding(25, 12, 25, 12);
+            this.panelHeader.Padding = new System.Windows.Forms.Padding(24, 12, 24, 12);
 
-            this.lblTituloModulo.Text = "Panel de Control";
-            this.lblTituloModulo.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTituloModulo.Text = "Dashboard y Métricas en Tiempo Real";
+            this.lblTituloModulo.Font = new System.Drawing.Font("Segoe UI", 13.5F, System.Drawing.FontStyle.Bold);
             this.lblTituloModulo.ForeColor = System.Drawing.Color.FromArgb(15, 23, 42);
             this.lblTituloModulo.Location = new System.Drawing.Point(22, 12);
             this.lblTituloModulo.AutoSize = true;
 
-            this.lblSubtituloModulo.Text = "Métricas en tiempo real, alertas de stock y estadísticas";
-            this.lblSubtituloModulo.Font = new System.Drawing.Font("Segoe UI", 8.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblSubtituloModulo.Text = "Gráficas interactivas, balance de stock y alertas críticas";
+            this.lblSubtituloModulo.Font = new System.Drawing.Font("Segoe UI", 8.8F);
             this.lblSubtituloModulo.ForeColor = System.Drawing.Color.FromArgb(100, 116, 139);
-            this.lblSubtituloModulo.Location = new System.Drawing.Point(24, 40);
+            this.lblSubtituloModulo.Location = new System.Drawing.Point(24, 39);
             this.lblSubtituloModulo.AutoSize = true;
 
             this.lblReloj.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
@@ -158,7 +173,7 @@ namespace WinFormsApp1
             this.lblUsuario.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.lblUsuario.Font = new System.Drawing.Font("Segoe UI", 8.8F);
             this.lblUsuario.ForeColor = System.Drawing.Color.FromArgb(100, 116, 139);
-            this.lblUsuario.Text = "👤 Anderson Moreno • Administrador";
+            this.lblUsuario.Text = "Anderson Moreno • Administrador";
             this.lblUsuario.Location = new System.Drawing.Point(740, 40);
             this.lblUsuario.Size = new System.Drawing.Size(235, 20);
             this.lblUsuario.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -168,34 +183,30 @@ namespace WinFormsApp1
             this.panelHeader.Controls.Add(this.lblReloj);
             this.panelHeader.Controls.Add(this.lblUsuario);
 
-            // Línea separadora sutil inferior del Header
             var lineaHeader = new System.Windows.Forms.Panel();
             lineaHeader.Dock = System.Windows.Forms.DockStyle.Bottom;
             lineaHeader.Height = 1;
             lineaHeader.BackColor = System.Drawing.Color.FromArgb(226, 232, 240);
             this.panelHeader.Controls.Add(lineaHeader);
 
-            // Reloj en tiempo real
             this.timerReloj = new System.Windows.Forms.Timer(this.components);
             this.timerReloj.Interval = 1000;
             this.timerReloj.Tick += (s, e) => ActualizarReloj();
             this.timerReloj.Start();
 
             // =========================================================================
-            // 3. CONTENEDOR PRINCIPAL DE PANTALLAS RESPONSIVO
+            // 3. CONTENEDOR PRINCIPAL
             // =========================================================================
             this.panelContenedor = new System.Windows.Forms.Panel();
             this.panelContenedor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContenedor.BackColor = System.Drawing.Color.FromArgb(248, 250, 252);
             this.panelContenedor.Padding = new System.Windows.Forms.Padding(18);
 
-            // Inicializar las pantallas de cada módulo con controles avanzados
             InicializarPantallaDashboard();
             InicializarPantallaInventario();
             InicializarPantallaVentas();
             InicializarPantallaHistorial();
 
-            // Agregar controles principales al formulario
             this.Controls.Add(this.panelContenedor);
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.panelSidebar);
@@ -205,36 +216,18 @@ namespace WinFormsApp1
 
         #endregion
 
-        private void EstilizarBotonSidebar(System.Windows.Forms.Button btn, string texto, int top)
-        {
-            btn.Text = texto;
-            btn.Top = top;
-            btn.Left = 8;
-            btn.Width = 224;
-            btn.Height = 44;
-            btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            btn.FlatAppearance.BorderSize = 0;
-            btn.BackColor = System.Drawing.Color.Transparent;
-            btn.ForeColor = System.Drawing.Color.FromArgb(203, 213, 225);
-            btn.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            btn.Padding = new System.Windows.Forms.Padding(16, 0, 0, 0);
-            btn.Cursor = System.Windows.Forms.Cursors.Hand;
-        }
-
-        // =============================================================================
         // DECLARACIÓN DE CONTROLES
-        // =============================================================================
         private System.Windows.Forms.Panel panelSidebar;
         private System.Windows.Forms.Panel panelLogo;
-        private System.Windows.Forms.Label lblLogoIcon;
+        private System.Windows.Forms.Panel pnlLogoBadge;
+        private System.Windows.Forms.Label lblLogoBadgeText;
         private System.Windows.Forms.Label lblLogoTitulo;
         private System.Windows.Forms.Label lblLogoSubtitulo;
-        private System.Windows.Forms.Panel panelIndicadorNav;
-        private System.Windows.Forms.Button btnNavDashboard;
-        private System.Windows.Forms.Button btnNavInventario;
-        private System.Windows.Forms.Button btnNavVentas;
-        private System.Windows.Forms.Button btnNavHistorial;
+
+        private WinFormsApp1.UI.BotonSidebar btnNavDashboard;
+        private WinFormsApp1.UI.BotonSidebar btnNavInventario;
+        private WinFormsApp1.UI.BotonSidebar btnNavVentas;
+        private WinFormsApp1.UI.BotonSidebar btnNavHistorial;
         private System.Windows.Forms.Label lblVersion;
 
         private System.Windows.Forms.Panel panelHeader;
@@ -253,10 +246,10 @@ namespace WinFormsApp1
         private System.Windows.Forms.Panel panelHistorial;
 
         // Controles de Dashboard
-        private System.Windows.Forms.Label lblKpiTotalProductos;
-        private System.Windows.Forms.Label lblKpiStockBajo;
-        private System.Windows.Forms.Label lblKpiTotalVentas;
-        private System.Windows.Forms.Label lblKpiNumVentas;
+        private WinFormsApp1.UI.TarjetaKpiModerna cardKpiProductos;
+        private WinFormsApp1.UI.TarjetaKpiModerna cardKpiStockCritico;
+        private WinFormsApp1.UI.TarjetaKpiModerna cardKpiVentas;
+        private WinFormsApp1.UI.TarjetaKpiModerna cardKpiTransacciones;
         private System.Windows.Forms.TableLayoutPanel tlpKpis;
         private System.Windows.Forms.TableLayoutPanel tlpGraficas;
         private WinFormsApp1.UI.GraficaBarrasModerna graficaBarras;
