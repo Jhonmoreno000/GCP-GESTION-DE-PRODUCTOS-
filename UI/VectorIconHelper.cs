@@ -18,11 +18,17 @@ namespace WinFormsApp1.UI
         /// <param name="color">Color principal del trazo o relleno.</param>
         public static void DibujarIcono(Graphics g, string icono, Rectangle bounds, Color color)
         {
+            if (bounds.Width <= 0 || bounds.Height <= 0)
+                return;
+
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
             int cx = bounds.X + bounds.Width / 2;
             int cy = bounds.Y + bounds.Height / 2;
             int size = Math.Min(bounds.Width, bounds.Height);
+            if (size < 2)
+                return;
+
             int half = size / 2;
 
             using var pen = new Pen(color, 2f) { StartCap = LineCap.Round, EndCap = LineCap.Round, LineJoin = LineJoin.Round };

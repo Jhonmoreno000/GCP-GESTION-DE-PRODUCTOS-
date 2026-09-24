@@ -21,6 +21,9 @@
     
     <!-- Nombre del archivo ejecutable generado -->
     <AssemblyName>GCP_GestionProductos</AssemblyName>
+    
+    <!-- Desactivar escalado de alta resolución para evitar que el frontend dibujado con coordenadas fijas se desajuste en monitores modernos -->
+    <ApplicationHighDpiMode>DpiUnaware</ApplicationHighDpiMode>
   </PropertyGroup>
 
 </Project>

@@ -17,6 +17,7 @@ namespace WinFormsApp1
         public GPC()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
             this.Load += GPC_Load;
         }
 
@@ -106,7 +107,7 @@ namespace WinFormsApp1
             dgvProductos.Columns.Add("Estado", "Estado de Stock");
 
             dgvProductos.Columns["Codigo"].Width = 95;
-            dgvProductos.Columns["Nombre"].Width = 190;
+            dgvProductos.Columns["Nombre"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvProductos.Columns["PrecioCompra"].DefaultCellStyle.Format = "C2";
             dgvProductos.Columns["PrecioVenta"].DefaultCellStyle.Format = "C2";
             dgvProductos.Columns["PrecioCompra"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
@@ -125,6 +126,7 @@ namespace WinFormsApp1
             dgvDashboardStockBajo.Columns.Add("Minimo", "Mín.");
             dgvDashboardStockBajo.Columns.Add("Sugerencia", "Alerta");
 
+            dgvDashboardStockBajo.Columns["Nombre"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvDashboardStockBajo.Columns["Stock"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvDashboardStockBajo.Columns["Minimo"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvDashboardStockBajo.Columns["Sugerencia"].Width = 140;
@@ -137,6 +139,7 @@ namespace WinFormsApp1
             dgvCarrito.Columns.Add("Precio", "P. Unit.");
             dgvCarrito.Columns.Add("Subtotal", "Subtotal");
 
+            dgvCarrito.Columns["Nombre"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvCarrito.Columns["Cantidad"].Width = 65;
             dgvCarrito.Columns["Cantidad"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvCarrito.Columns["Precio"].DefaultCellStyle.Format = "C2";
@@ -153,6 +156,7 @@ namespace WinFormsApp1
             dgvHistorialVentas.Columns.Add("Articulos", "Artículos");
             dgvHistorialVentas.Columns.Add("Total", "Monto Total");
 
+            dgvHistorialVentas.Columns["Cliente"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvHistorialVentas.Columns["Total"].DefaultCellStyle.Format = "C2";
             dgvHistorialVentas.Columns["Total"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvHistorialVentas.Columns["Articulos"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;

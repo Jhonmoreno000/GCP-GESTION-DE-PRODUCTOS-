@@ -46,7 +46,7 @@ namespace WinFormsApp1.UI
 
         public TarjetaModerna()
         {
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
             this.BackColor = Color.Transparent;
             this.Padding = new Padding(16);
         }
@@ -74,6 +74,12 @@ namespace WinFormsApp1.UI
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
+            // Durante el primer layout algunos controles todavía pueden tener tamaño cero.
+            // Evita pasar rectángulos negativos a GDI+, que termina lanzando
+            // ArgumentException: "Parameter is not valid".
+            if (Width <= 1 || Height <= 1)
+                return;
+
             var g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -93,15 +99,21 @@ namespace WinFormsApp1.UI
 
         public static GraphicsPath CrearPathRectanguloRedondeado(Rectangle bounds, int radius)
         {
-            int diameter = radius * 2;
             var path = new GraphicsPath();
 
-            if (radius <= 0)
+            if (bounds.Width <= 0 || bounds.Height <= 0)
+                return path;
+
+            int maxRadius = Math.Min(bounds.Width, bounds.Height) / 2;
+            radius = Math.Clamp(radius, 0, maxRadius);
+
+            if (radius == 0)
             {
                 path.AddRectangle(bounds);
                 return path;
             }
 
+            int diameter = radius * 2;
             Rectangle arc = new Rectangle(bounds.Location, new Size(diameter, diameter));
 
             path.AddArc(arc, 180, 90);
@@ -236,7 +248,7 @@ namespace WinFormsApp1.UI
 
         public BotonSidebar()
         {
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.SupportsTransparentBackColor, true);
             this.FlatStyle = FlatStyle.Flat;
             this.FlatAppearance.BorderSize = 0;
             this.BackColor = Color.Transparent;
@@ -265,9 +277,16 @@ namespace WinFormsApp1.UI
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
+            if (Width <= 1 || Height <= 1)
+                return;
+
             var g = pevent.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+
+            // Limpiar el buffer sucio de memoria gráfica con el color del Sidebar.
+            // Esto soluciona los solapamientos de texto y "artefactos fantasmas" en los botones.
+            g.Clear(Color.FromArgb(15, 23, 42));
 
             var rect = new Rectangle(0, 0, Width - 1, Height - 1);
 
@@ -308,11 +327,16 @@ namespace WinFormsApp1.UI
             VectorIconHelper.DibujarIcono(g, _icono, rectIcono, colorIcono);
 
             // Texto del botón
-            using var fontActual = _estaActivo ? new Font(Font, FontStyle.Bold) : Font;
+            Font fontActual = _estaActivo ? new Font(Font, FontStyle.Bold) : Font;
             using var brushTexto = new SolidBrush(colorTexto);
             using var sf = new StringFormat { LineAlignment = StringAlignment.Center };
             var rectTexto = new Rectangle(46, 0, Width - 50, Height);
             g.DrawString(Text, fontActual, brushTexto, rectTexto, sf);
+            
+            if (_estaActivo) 
+            {
+                fontActual.Dispose();
+            }
         }
     }
 
@@ -329,8 +353,8 @@ namespace WinFormsApp1.UI
 
         public GraficaBarrasModerna()
         {
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
-            this.BackColor = Color.White;
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
+            this.BackColor = Color.Transparent;
             this.Padding = new Padding(15);
         }
 
@@ -453,8 +477,8 @@ namespace WinFormsApp1.UI
 
         public GraficaDonaProgreso()
         {
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
-            this.BackColor = Color.White;
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
+            this.BackColor = Color.Transparent;
             this.Padding = new Padding(15);
         }
 
@@ -585,7 +609,7 @@ namespace WinFormsApp1.UI
 
         public BotonModerno()
         {
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.SupportsTransparentBackColor, true);
             this.FlatStyle = FlatStyle.Flat;
             this.FlatAppearance.BorderSize = 0;
             this.BackColor = Color.Transparent;
@@ -629,6 +653,9 @@ namespace WinFormsApp1.UI
             var g = pevent.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+
+            // Limpiar las esquinas fuera del radio para evitar artefactos negros
+            g.Clear(Color.White);
 
             var rect = new Rectangle(0, 0, Width - 1, Height - 1);
             using var path = TarjetaModerna.CrearPathRectanguloRedondeado(rect, _radioBorde);

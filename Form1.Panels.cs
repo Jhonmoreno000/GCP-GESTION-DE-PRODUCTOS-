@@ -150,16 +150,17 @@ namespace WinFormsApp1
 
             var cardFiltros = new TarjetaModerna();
             cardFiltros.Dock = System.Windows.Forms.DockStyle.Top;
+            cardFiltros.Size = new System.Drawing.Size(990, 60);
             cardFiltros.Height = 60;
             cardFiltros.Padding = new System.Windows.Forms.Padding(16, 10, 16, 10);
             cardFiltros.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
 
             var lblBuscar = new System.Windows.Forms.Label { Text = "Buscar:", Location = new System.Drawing.Point(16, 18), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold) };
-            this.txtBuscarProducto = new System.Windows.Forms.TextBox { Location = new System.Drawing.Point(74, 15), Width = 300, Font = new System.Drawing.Font("Segoe UI", 9.5F), PlaceholderText = "Filtrar por código o nombre..." };
+            this.txtBuscarProducto = new System.Windows.Forms.TextBox { Location = new System.Drawing.Point(74, 15), Width = 300, Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right, Font = new System.Drawing.Font("Segoe UI", 9.5F), PlaceholderText = "Filtrar por código o nombre..." };
             this.txtBuscarProducto.TextChanged += (s, e) => FiltrarInventario();
 
-            var lblCat = new System.Windows.Forms.Label { Text = "Categoría:", Location = new System.Drawing.Point(395, 18), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold) };
-            this.cmbFiltroCategoria = new System.Windows.Forms.ComboBox { Location = new System.Drawing.Point(470, 15), Width = 180, Font = new System.Drawing.Font("Segoe UI", 9.5F), DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList };
+            var lblCat = new System.Windows.Forms.Label { Text = "Categoría:", Location = new System.Drawing.Point(395, 18), Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right, AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold) };
+            this.cmbFiltroCategoria = new System.Windows.Forms.ComboBox { Location = new System.Drawing.Point(470, 15), Width = 180, Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right, Font = new System.Drawing.Font("Segoe UI", 9.5F), DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList };
             this.cmbFiltroCategoria.Items.AddRange(new object[] { "Todas", "Tecnología", "Accesorios", "Cables", "Componentes", "General" });
             this.cmbFiltroCategoria.SelectedIndex = 0;
             this.cmbFiltroCategoria.SelectedIndexChanged += (s, e) => FiltrarInventario();
@@ -175,7 +176,7 @@ namespace WinFormsApp1
             splitInventario.Panel1.Padding = new System.Windows.Forms.Padding(0, 8, 6, 0);
             splitInventario.Panel2.Padding = new System.Windows.Forms.Padding(6, 8, 0, 0);
 
-            var cardTabla = new TarjetaModerna { Dock = System.Windows.Forms.DockStyle.Fill, Padding = new System.Windows.Forms.Padding(16) };
+            var cardTabla = new TarjetaModerna { Dock = System.Windows.Forms.DockStyle.Fill, Padding = new System.Windows.Forms.Padding(16), Size = new System.Drawing.Size(680, 600) };
             this.dgvProductos = CrearDataGridViewEstilizado();
             this.dgvProductos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProductos.SelectionChanged += DgvProductos_SelectionChanged;
@@ -183,7 +184,7 @@ namespace WinFormsApp1
             cardTabla.Controls.Add(this.dgvProductos);
             splitInventario.Panel1.Controls.Add(cardTabla);
 
-            var cardForm = new TarjetaModerna { Dock = System.Windows.Forms.DockStyle.Fill, Padding = new System.Windows.Forms.Padding(18), AutoScroll = true };
+            var cardForm = new TarjetaModerna { Dock = System.Windows.Forms.DockStyle.Fill, Padding = new System.Windows.Forms.Padding(18), AutoScroll = true, Size = new System.Drawing.Size(310, 600) };
 
             var lblTituloForm = new System.Windows.Forms.Label();
             lblTituloForm.Text = "Ficha del Producto";
@@ -197,7 +198,7 @@ namespace WinFormsApp1
             CrearCampoFormulario(cardForm, "Nombre / Descripción:", out this.txtNombre, ref yPos);
 
             var lblCatForm = new System.Windows.Forms.Label { Text = "Categoría:", Location = new System.Drawing.Point(18, yPos), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 8.8F, System.Drawing.FontStyle.Bold) };
-            this.cmbCategoria = new System.Windows.Forms.ComboBox { Location = new System.Drawing.Point(18, yPos + 20), Width = 280, DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList, Font = new System.Drawing.Font("Segoe UI", 9.5F) };
+            this.cmbCategoria = new System.Windows.Forms.ComboBox { Location = new System.Drawing.Point(18, yPos + 20), Width = 280, Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right, DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList, Font = new System.Drawing.Font("Segoe UI", 9.5F) };
             this.cmbCategoria.Items.AddRange(new object[] { "Tecnología", "Accesorios", "Cables", "Componentes", "General" });
             this.cmbCategoria.SelectedIndex = 0;
             cardForm.Controls.AddRange(new System.Windows.Forms.Control[] { lblCatForm, this.cmbCategoria });
@@ -214,7 +215,8 @@ namespace WinFormsApp1
                 Text = "Guardar Producto",
                 ColorNormal = System.Drawing.Color.FromArgb(99, 102, 241),
                 Location = new System.Drawing.Point(18, yPos),
-                Size = new System.Drawing.Size(280, 40)
+                Size = new System.Drawing.Size(280, 40),
+                Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right
             };
             this.btnGuardarProducto.Click += BtnGuardarProducto_Click;
 
@@ -263,7 +265,7 @@ namespace WinFormsApp1
             splitVentas.Panel1.Padding = new System.Windows.Forms.Padding(0, 0, 6, 0);
             splitVentas.Panel2.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
 
-            var cardCarrito = new TarjetaModerna { Dock = System.Windows.Forms.DockStyle.Fill, Padding = new System.Windows.Forms.Padding(18) };
+            var cardCarrito = new TarjetaModerna { Dock = System.Windows.Forms.DockStyle.Fill, Padding = new System.Windows.Forms.Padding(18), Size = new System.Drawing.Size(700, 690) };
 
             var lblTituloVentas = new System.Windows.Forms.Label();
             lblTituloVentas.Text = "Carrito de Compras / Facturación Activa";
@@ -273,21 +275,22 @@ namespace WinFormsApp1
             lblTituloVentas.Size = new System.Drawing.Size(380, 24);
 
             var lblProdVenta = new System.Windows.Forms.Label { Text = "Seleccionar Producto:", Location = new System.Drawing.Point(18, 48), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 8.8F, System.Drawing.FontStyle.Bold) };
-            this.cmbVentaProducto = new System.Windows.Forms.ComboBox { Location = new System.Drawing.Point(18, 70), Width = 390, DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList, Font = new System.Drawing.Font("Segoe UI", 9.5F) };
+            this.cmbVentaProducto = new System.Windows.Forms.ComboBox { Location = new System.Drawing.Point(18, 70), Width = 390, Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left, DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList, Font = new System.Drawing.Font("Segoe UI", 9.5F) };
             this.cmbVentaProducto.SelectedIndexChanged += CmbVentaProducto_SelectedIndexChanged;
 
             this.lblVentaPrecioUnitario = new System.Windows.Forms.Label { Text = "Precio: $0.00", Location = new System.Drawing.Point(18, 102), AutoSize = true, ForeColor = System.Drawing.Color.FromArgb(99, 102, 241), Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold) };
             this.lblVentaStockDisponible = new System.Windows.Forms.Label { Text = "Stock disponible: 0", Location = new System.Drawing.Point(190, 102), AutoSize = true, ForeColor = System.Drawing.Color.FromArgb(100, 116, 139), Font = new System.Drawing.Font("Segoe UI", 9F) };
 
-            var lblCant = new System.Windows.Forms.Label { Text = "Cantidad:", Location = new System.Drawing.Point(425, 48), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 8.8F, System.Drawing.FontStyle.Bold) };
-            this.numVentaCantidad = new System.Windows.Forms.NumericUpDown { Location = new System.Drawing.Point(425, 70), Width = 80, Minimum = 1, Maximum = 9999, Value = 1, Font = new System.Drawing.Font("Segoe UI", 9.5F) };
+            var lblCant = new System.Windows.Forms.Label { Text = "Cantidad:", Location = new System.Drawing.Point(425, 48), Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right, AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 8.8F, System.Drawing.FontStyle.Bold) };
+            this.numVentaCantidad = new System.Windows.Forms.NumericUpDown { Location = new System.Drawing.Point(425, 70), Width = 80, Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left, Minimum = 1, Maximum = 9999, Value = 1, Font = new System.Drawing.Font("Segoe UI", 9.5F) };
 
             this.btnAgregarAlCarrito = new BotonModerno
             {
                 Text = "Agregar",
                 ColorNormal = System.Drawing.Color.FromArgb(99, 102, 241),
                 Location = new System.Drawing.Point(520, 67),
-                Size = new System.Drawing.Size(120, 34)
+                Size = new System.Drawing.Size(120, 34),
+                Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left
             };
             this.btnAgregarAlCarrito.Click += BtnAgregarAlCarrito_Click;
 
@@ -315,7 +318,7 @@ namespace WinFormsApp1
 
             splitVentas.Panel1.Controls.Add(cardCarrito);
 
-            var cardCobro = new TarjetaModerna { Dock = System.Windows.Forms.DockStyle.Fill, Padding = new System.Windows.Forms.Padding(22) };
+            var cardCobro = new TarjetaModerna { Dock = System.Windows.Forms.DockStyle.Fill, Padding = new System.Windows.Forms.Padding(22), Size = new System.Drawing.Size(290, 690) };
 
             var lblCobroTitulo = new System.Windows.Forms.Label();
             lblCobroTitulo.Text = "Resumen de Pago";
@@ -329,7 +332,7 @@ namespace WinFormsApp1
             this.txtVentaCliente.Text = "Consumidor Final";
 
             var lblMetodo = new System.Windows.Forms.Label { Text = "Método de Pago:", Location = new System.Drawing.Point(18, yCobro), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 8.8F, System.Drawing.FontStyle.Bold) };
-            this.cmbVentaMetodoPago = new System.Windows.Forms.ComboBox { Location = new System.Drawing.Point(18, yCobro + 20), Width = 280, DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList, Font = new System.Drawing.Font("Segoe UI", 9.5F) };
+            this.cmbVentaMetodoPago = new System.Windows.Forms.ComboBox { Location = new System.Drawing.Point(18, yCobro + 20), Width = 280, Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right, DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList, Font = new System.Drawing.Font("Segoe UI", 9.5F) };
             this.cmbVentaMetodoPago.Items.AddRange(new object[] { "Efectivo", "Tarjeta Débito / Crédito", "Transferencia Digital (Nequi/Daviplata)" });
             this.cmbVentaMetodoPago.SelectedIndex = 0;
             cardCobro.Controls.AddRange(new System.Windows.Forms.Control[] { lblMetodo, this.cmbVentaMetodoPago });
@@ -339,6 +342,7 @@ namespace WinFormsApp1
             {
                 Location = new System.Drawing.Point(18, yCobro),
                 Size = new System.Drawing.Size(280, 110),
+                Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right,
                 ColorBorde = System.Drawing.Color.FromArgb(203, 213, 225),
                 Padding = new System.Windows.Forms.Padding(14)
             };
@@ -359,6 +363,7 @@ namespace WinFormsApp1
                 ColorNormal = System.Drawing.Color.FromArgb(16, 185, 129),
                 Location = new System.Drawing.Point(18, yCobro),
                 Size = new System.Drawing.Size(280, 46),
+                Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right,
                 Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold)
             };
             this.btnCompletarVenta.Click += BtnCompletarVenta_Click;
@@ -368,7 +373,8 @@ namespace WinFormsApp1
                 Text = "Vaciar Carrito",
                 ColorNormal = System.Drawing.Color.FromArgb(100, 116, 139),
                 Location = new System.Drawing.Point(18, yCobro + 56),
-                Size = new System.Drawing.Size(280, 36)
+                Size = new System.Drawing.Size(280, 36),
+                Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right
             };
             this.btnCancelarVenta.Click += (s, e) => VaciarCarrito();
 
@@ -429,7 +435,6 @@ namespace WinFormsApp1
             dgv.AllowUserToAddRows = false;
             dgv.AllowUserToDeleteRows = false;
             dgv.ReadOnly = true;
-            dgv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dgv.RowTemplate.Height = 36;
 
             // Encabezado Slate 900 consistente (sin selección azul no deseada)
@@ -455,7 +460,7 @@ namespace WinFormsApp1
         private void CrearCampoFormulario(System.Windows.Forms.Panel parent, string label, out System.Windows.Forms.TextBox txt, ref int yPos)
         {
             var lbl = new System.Windows.Forms.Label { Text = label, Location = new System.Drawing.Point(18, yPos), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 8.8F, System.Drawing.FontStyle.Bold), ForeColor = System.Drawing.Color.FromArgb(30, 41, 59) };
-            txt = new System.Windows.Forms.TextBox { Location = new System.Drawing.Point(18, yPos + 20), Width = 280, Font = new System.Drawing.Font("Segoe UI", 9.5F) };
+            txt = new System.Windows.Forms.TextBox { Location = new System.Drawing.Point(18, yPos + 20), Width = parent.Width - 36, Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right, Font = new System.Drawing.Font("Segoe UI", 9.5F) };
             parent.Controls.Add(lbl);
             parent.Controls.Add(txt);
             yPos += 56;
@@ -464,7 +469,7 @@ namespace WinFormsApp1
         private void CrearCampoNumerico(System.Windows.Forms.Panel parent, string label, out System.Windows.Forms.NumericUpDown num, ref int yPos, int decimales, decimal max)
         {
             var lbl = new System.Windows.Forms.Label { Text = label, Location = new System.Drawing.Point(18, yPos), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 8.8F, System.Drawing.FontStyle.Bold), ForeColor = System.Drawing.Color.FromArgb(30, 41, 59) };
-            num = new System.Windows.Forms.NumericUpDown { Location = new System.Drawing.Point(18, yPos + 20), Width = 280, DecimalPlaces = decimales, Maximum = max, Font = new System.Drawing.Font("Segoe UI", 9.5F) };
+            num = new System.Windows.Forms.NumericUpDown { Location = new System.Drawing.Point(18, yPos + 20), Width = parent.Width - 36, Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right, DecimalPlaces = decimales, Maximum = max, Font = new System.Drawing.Font("Segoe UI", 9.5F) };
             parent.Controls.Add(lbl);
             parent.Controls.Add(num);
             yPos += 56;
