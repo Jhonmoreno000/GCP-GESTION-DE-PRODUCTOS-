@@ -6,12 +6,12 @@ GCP Studio es una aplicación moderna de escritorio desarrollada en **C# (.NET 8
 
 ## Características Principales
 
-*   **📊 Dashboard Interactivo:** Visualización de métricas en tiempo real, alertas críticas y distribución de stock mediante componentes personalizados (gráficas de dona y barras dibujadas nativamente).
-*   **📦 Gestión Integral de Inventario:** Catálogo de productos completo con ficha detallada, edición ágil, control de precios y alertas de stock mínimo.
-*   **🛒 Punto de Venta (POS Inteligente):** Facturación rápida con autocompletado, control de cantidad, resumen de cobro dinámico y descuento automático del inventario.
-*   **📋 Historial de Transacciones:** Registro completo de todas las ventas procesadas.
-*   **🎨 Diseño Moderno y Nativo:** Interfaz construida desde cero sin dependencias externas pesadas, utilizando custom painting (GDI+) para bordes redondeados, íconos vectoriales dinámicos y micro-animaciones a 60FPS.
-*   **💾 Almacenamiento Local (JSON):** Persistencia de datos ligera y sin complicaciones mediante archivos JSON (productos y ventas).
+*   ** Dashboard Interactivo:** Visualización de métricas en tiempo real, alertas críticas y distribución de stock mediante componentes personalizados (gráficas de dona y barras dibujadas nativamente).
+*   ** Gestión Integral de Inventario:** Catálogo de productos completo con ficha detallada, edición ágil, control de precios y alertas de stock mínimo.
+*   ** Punto de Venta (POS Inteligente):** Facturación rápida con autocompletado, control de cantidad, resumen de cobro dinámico y descuento automático del inventario.
+*   ** Historial de Transacciones:** Registro completo de todas las ventas procesadas.
+*   ** Diseño Moderno y Nativo:** Interfaz construida desde cero sin dependencias externas pesadas, utilizando custom painting (GDI+) para bordes redondeados, íconos vectoriales dinámicos y micro-animaciones a 60FPS.
+*   ** Almacenamiento Local (JSON):** Persistencia de datos ligera y sin complicaciones mediante archivos JSON (productos y ventas).
 
 ## Requisitos del Sistema
 
