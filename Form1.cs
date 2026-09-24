@@ -1,41 +1,36 @@
+using System.Drawing.Drawing2D;
 using WinFormsApp1.Models;
 using WinFormsApp1.Services;
+using WinFormsApp1.UI;
 
 namespace WinFormsApp1
 {
     /// <summary>
-    /// Formulario principal de la aplicación GCP (Gestión y Control de Productos).
-    /// Controla la navegación entre módulos, operaciones de inventario, punto de venta y métricas en tiempo real.
+    /// Formulario principal de la aplicación GCP Studio.
+    /// Controla la navegación dinámica, renderizado de gráficas con animación,
+    /// dibujo de etiquetas (badges) en tablas y lógica transaccional de inventario y ventas.
     /// </summary>
     public partial class GPC : Form
     {
-        // Lista temporal que almacena los ítems del carrito de venta actual antes de ser cobrados
+        // Carrito de compras temporal en memoria
         private readonly List<DetalleVenta> _carritoActual = new();
 
-        /// <summary>
-        /// Constructor principal del formulario GPC.
-        /// </summary>
         public GPC()
         {
-            // Inicializa todos los componentes gráficos definidos en el diseñador
             InitializeComponent();
-
-            // Configura los eventos del ciclo de vida del formulario
             this.Load += GPC_Load;
         }
 
-        /// <summary>
-        /// Evento que se ejecuta inmediatamente después de que el formulario se carga por primera vez.
-        /// </summary>
         private void GPC_Load(object? sender, EventArgs e)
         {
-            // Configurar columnas de las tablas del sistema
+            // Configurar columnas de las tablas y activar eventos de pintura personalizada (badges)
             ConfigurarColumnasTablas();
+            ConfigurarPinturaPersonalizadaTablas();
 
-            // Cargar datos en todos los módulos
+            // Cargar datos en todos los módulos y refrescar métricas
             RefrescarTodo();
 
-            // Iniciar visualmente en el módulo de Dashboard
+            // Iniciar en el módulo de Dashboard
             MostrarModulo("dashboard");
 
             // Actualizar la hora en el encabezado
@@ -43,64 +38,60 @@ namespace WinFormsApp1
         }
 
         // =========================================================================
-        // NAVEGACIÓN ENTRE PANTALLAS (CAMBIO DE MÓDULOS)
+        // NAVEGACIÓN Y EFECTOS VISUALES ENTRE MÓDULOS
         // =========================================================================
 
         /// <summary>
-        /// Cambia la vista activa del contenedor principal y actualiza los estilos visuales
-        /// de los botones de la barra lateral para indicar el módulo seleccionado.
+        /// Muestra el panel seleccionado, actualiza títulos y anima la barra indicadora lateral.
         /// </summary>
-        /// <param name="modulo">Identificador del módulo: 'dashboard', 'inventario', 'ventas', 'historial'</param>
         private void MostrarModulo(string modulo)
         {
-            // Ocultar todos los paneles para mostrar solo el seleccionado
             panelDashboard.Visible = false;
             panelInventario.Visible = false;
             panelVentas.Visible = false;
             panelHistorial.Visible = false;
 
-            // Restablecer estilos de los botones del menú lateral
             RestablecerEstiloBotonesNav();
 
             switch (modulo.ToLower())
             {
                 case "dashboard":
                     panelDashboard.Visible = true;
-                    lblTituloModulo.Text = "📊 Dashboard y Métricas";
-                    lblSubtituloModulo.Text = "Resumen general de inventario, alertas y ventas";
+                    lblTituloModulo.Text = "📊 Dashboard y Métricas en Tiempo Real";
+                    lblSubtituloModulo.Text = "Gráficas interactivas, balance de stock y alertas críticas";
                     ActivarBotonNav(btnNavDashboard);
                     ActualizarMetricasDashboard();
+                    // Disparar animación de crecimiento de las gráficas
+                    graficaBarras.IniciarAnimacion();
+                    graficaDona.IniciarAnimacion();
                     break;
 
                 case "inventario":
                     panelInventario.Visible = true;
-                    lblTituloModulo.Text = "📦 Gestión de Inventario";
-                    lblSubtituloModulo.Text = "Catálogo completo de productos, precios y control de stock";
+                    lblTituloModulo.Text = "📦 Gestión Integral de Inventario";
+                    lblSubtituloModulo.Text = "Catálogo de productos, control de stock y edición ágil";
                     ActivarBotonNav(btnNavInventario);
                     CargarTablaProductos(GestorDatos.Instancia.Productos);
                     break;
 
                 case "ventas":
                     panelVentas.Visible = true;
-                    lblTituloModulo.Text = "🛒 Punto de Venta (POS)";
-                    lblSubtituloModulo.Text = "Generación de ventas, facturación y control de salida de mercancía";
+                    lblTituloModulo.Text = "🛒 Punto de Venta (POS Inteligente)";
+                    lblSubtituloModulo.Text = "Facturación ágil, descuento automático de inventario y recibo digital";
                     ActivarBotonNav(btnNavVentas);
                     CargarComboProductosVenta();
                     break;
 
                 case "historial":
                     panelHistorial.Visible = true;
-                    lblTituloModulo.Text = "📋 Historial de Transacciones";
-                    lblSubtituloModulo.Text = "Auditoría de todas las ventas procesadas en el sistema";
+                    lblTituloModulo.Text = "📋 Auditoría y Registro de Ventas";
+                    lblSubtituloModulo.Text = "Historial completo de comprobantes y recaudación";
                     ActivarBotonNav(btnNavHistorial);
                     CargarTablaHistorial();
                     break;
             }
         }
 
-        /// <summary>
-        /// Restaura el color de fondo y texto de todos los botones de la barra lateral.
-        /// </summary>
         private void RestablecerEstiloBotonesNav()
         {
             var botones = new[] { btnNavDashboard, btnNavInventario, btnNavVentas, btnNavHistorial };
@@ -111,33 +102,28 @@ namespace WinFormsApp1
             }
         }
 
-        /// <summary>
-        /// Destaca visualmente el botón de la barra lateral que corresponde al módulo activo.
-        /// </summary>
         private void ActivarBotonNav(Button btn)
         {
-            btn.BackColor = Color.FromArgb(37, 99, 235); // Azul activo
+            btn.BackColor = Color.FromArgb(30, 41, 59); // Slate 800 suave
             btn.ForeColor = Color.White;
+
+            // Animar / desplazar el indicador visual lateral hacia la posición del botón activo
+            panelIndicadorNav.Top = btn.Top;
+            panelIndicadorNav.BringToFront();
         }
 
-        /// <summary>
-        /// Actualiza la etiqueta del reloj en el encabezado con la fecha y hora del sistema.
-        /// </summary>
         private void ActualizarReloj()
         {
             lblReloj.Text = DateTime.Now.ToString("dd/MM/yyyy • hh:mm:ss tt");
         }
 
         // =========================================================================
-        // CONFIGURACIÓN DE ESTRUCTURA DE TABLAS (DATAGRIDVIEWS)
+        // CONFIGURACIÓN DE TABLAS Y BADGES (EFECTOS ESPECIALES DE DISEÑO)
         // =========================================================================
 
-        /// <summary>
-        /// Define las columnas, formatos de texto y alineaciones para cada DataGridView.
-        /// </summary>
         private void ConfigurarColumnasTablas()
         {
-            // 1. Tabla de Inventario de Productos
+            // 1. Inventario
             dgvProductos.Columns.Clear();
             dgvProductos.Columns.Add("Codigo", "Código");
             dgvProductos.Columns.Add("Nombre", "Descripción del Producto");
@@ -146,30 +132,33 @@ namespace WinFormsApp1
             dgvProductos.Columns.Add("PrecioVenta", "P. Venta");
             dgvProductos.Columns.Add("Stock", "Stock Actual");
             dgvProductos.Columns.Add("StockMinimo", "Mínimo");
-            dgvProductos.Columns.Add("Estado", "Estado Stock");
+            dgvProductos.Columns.Add("Estado", "Estado de Stock");
 
-            dgvProductos.Columns["Codigo"].Width = 90;
-            dgvProductos.Columns["Nombre"].Width = 180;
+            dgvProductos.Columns["Codigo"].Width = 95;
+            dgvProductos.Columns["Nombre"].Width = 190;
             dgvProductos.Columns["PrecioCompra"].DefaultCellStyle.Format = "C2";
             dgvProductos.Columns["PrecioVenta"].DefaultCellStyle.Format = "C2";
             dgvProductos.Columns["PrecioCompra"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvProductos.Columns["PrecioVenta"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvProductos.Columns["Stock"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvProductos.Columns["StockMinimo"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvProductos.Columns["Estado"].Width = 120;
+            dgvProductos.Columns["Estado"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            // 2. Tabla de Stock Bajo en Dashboard
+            // 2. Dashboard Stock Bajo
             dgvDashboardStockBajo.Columns.Clear();
             dgvDashboardStockBajo.Columns.Add("Codigo", "Código");
-            dgvDashboardStockBajo.Columns.Add("Nombre", "Producto en Riesgo");
+            dgvDashboardStockBajo.Columns.Add("Nombre", "Producto");
             dgvDashboardStockBajo.Columns.Add("Categoria", "Categoría");
-            dgvDashboardStockBajo.Columns.Add("Stock", "Stock Disponible");
-            dgvDashboardStockBajo.Columns.Add("Minimo", "Mínimo Requerido");
-            dgvDashboardStockBajo.Columns.Add("Sugerencia", "Acción Sugerida");
+            dgvDashboardStockBajo.Columns.Add("Stock", "Stock");
+            dgvDashboardStockBajo.Columns.Add("Minimo", "Mín.");
+            dgvDashboardStockBajo.Columns.Add("Sugerencia", "Alerta");
 
             dgvDashboardStockBajo.Columns["Stock"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvDashboardStockBajo.Columns["Minimo"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvDashboardStockBajo.Columns["Sugerencia"].Width = 140;
 
-            // 3. Tabla del Carrito de Ventas
+            // 3. Carrito Ventas
             dgvCarrito.Columns.Clear();
             dgvCarrito.Columns.Add("Codigo", "Código");
             dgvCarrito.Columns.Add("Nombre", "Producto");
@@ -177,20 +166,20 @@ namespace WinFormsApp1
             dgvCarrito.Columns.Add("Precio", "P. Unit.");
             dgvCarrito.Columns.Add("Subtotal", "Subtotal");
 
-            dgvCarrito.Columns["Cantidad"].Width = 60;
+            dgvCarrito.Columns["Cantidad"].Width = 65;
             dgvCarrito.Columns["Cantidad"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvCarrito.Columns["Precio"].DefaultCellStyle.Format = "C2";
             dgvCarrito.Columns["Precio"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvCarrito.Columns["Subtotal"].DefaultCellStyle.Format = "C2";
             dgvCarrito.Columns["Subtotal"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
-            // 4. Tabla del Historial de Ventas
+            // 4. Historial
             dgvHistorialVentas.Columns.Clear();
             dgvHistorialVentas.Columns.Add("IdVenta", "N° Transacción");
             dgvHistorialVentas.Columns.Add("FechaHora", "Fecha y Hora");
             dgvHistorialVentas.Columns.Add("Cliente", "Cliente");
             dgvHistorialVentas.Columns.Add("MetodoPago", "Método de Pago");
-            dgvHistorialVentas.Columns.Add("Articulos", "Total Artículos");
+            dgvHistorialVentas.Columns.Add("Articulos", "Artículos");
             dgvHistorialVentas.Columns.Add("Total", "Monto Total");
 
             dgvHistorialVentas.Columns["Total"].DefaultCellStyle.Format = "C2";
@@ -198,65 +187,161 @@ namespace WinFormsApp1
             dgvHistorialVentas.Columns["Articulos"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
 
-        // =========================================================================
-        // MÓDULO DASHBOARD: CÁLCULO DE KPIS Y MÉTRICAS
-        // =========================================================================
+        /// <summary>
+        /// Vincula el evento CellPainting para renderizar badges (pastillas) redondeadas modernas en lugar de texto plano.
+        /// </summary>
+        private void ConfigurarPinturaPersonalizadaTablas()
+        {
+            dgvProductos.CellPainting += (s, e) =>
+            {
+                if (e.RowIndex >= 0 && e.ColumnIndex == dgvProductos.Columns["Estado"].Index)
+                {
+                    e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
+
+                    string texto = e.Value?.ToString() ?? "";
+                    Color colorFondo;
+                    Color colorTexto;
+
+                    if (texto.Contains("Agotado"))
+                    {
+                        colorFondo = Color.FromArgb(254, 226, 226); // Rojo pastel
+                        colorTexto = Color.FromArgb(185, 28, 28);
+                    }
+                    else if (texto.Contains("Stock Bajo"))
+                    {
+                        colorFondo = Color.FromArgb(254, 243, 199); // Ámbar pastel
+                        colorTexto = Color.FromArgb(180, 83, 9);
+                    }
+                    else
+                    {
+                        colorFondo = Color.FromArgb(220, 252, 231); // Verde pastel
+                        colorTexto = Color.FromArgb(21, 128, 61);
+                    }
+
+                    if (e.Graphics != null)
+                    {
+                        DibujarPillBadge(e.Graphics, e.CellBounds, texto, colorFondo, colorTexto);
+                    }
+                    e.Handled = true;
+                }
+            };
+
+            dgvDashboardStockBajo.CellPainting += (s, e) =>
+            {
+                if (e.RowIndex >= 0 && e.ColumnIndex == dgvDashboardStockBajo.Columns["Sugerencia"].Index)
+                {
+                    e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
+                    string texto = e.Value?.ToString() ?? "";
+                    Color colorFondo = Color.FromArgb(254, 226, 226);
+                    Color colorTexto = Color.FromArgb(185, 28, 28);
+
+                    if (e.Graphics != null)
+                    {
+                        DibujarPillBadge(e.Graphics, e.CellBounds, texto, colorFondo, colorTexto);
+                    }
+                    e.Handled = true;
+                }
+            };
+        }
 
         /// <summary>
-        /// Recalcula en tiempo real los indicadores de rendimiento (KPIs) y la tabla de alertas.
+        /// Dibuja una pastilla (pill badge) suave con esquinas redondeadas y texto centrado.
         /// </summary>
+        private void DibujarPillBadge(Graphics g, Rectangle cellBounds, string texto, Color fondo, Color textoColor)
+        {
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            int badgeHeight = 22;
+            int badgeWidth = Math.Min(cellBounds.Width - 16, 110);
+            int x = cellBounds.X + (cellBounds.Width - badgeWidth) / 2;
+            int y = cellBounds.Y + (cellBounds.Height - badgeHeight) / 2;
+
+            var rectBadge = new Rectangle(x, y, badgeWidth, badgeHeight);
+            using var path = TarjetaModerna.CrearPathRectanguloRedondeado(rectBadge, badgeHeight / 2);
+
+            using var brushFondo = new SolidBrush(fondo);
+            g.FillPath(brushFondo, path);
+
+            using var font = new Font("Segoe UI", 7.8F, FontStyle.Bold);
+            using var brushTexto = new SolidBrush(textoColor);
+            using var sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+            g.DrawString(texto, font, brushTexto, rectBadge, sf);
+        }
+
+        // =========================================================================
+        // MÓDULO DASHBOARD: KPIS Y ACTUALIZACIÓN DE GRÁFICAS
+        // =========================================================================
+
         private void ActualizarMetricasDashboard()
         {
             var productos = GestorDatos.Instancia.Productos;
             var ventas = GestorDatos.Instancia.Ventas;
 
-            // 1. Total productos
+            // 1. KPIs
             lblKpiTotalProductos.Text = productos.Count.ToString();
-
-            // 2. Productos con stock menor o igual al mínimo
             int criticos = productos.Count(p => p.TieneStockBajo);
             lblKpiStockBajo.Text = criticos.ToString();
-
-            // 3. Monto total vendido
             decimal sumaVentas = ventas.Sum(v => v.TotalVenta);
             lblKpiTotalVentas.Text = $"${sumaVentas:N2}";
-
-            // 4. Número de ventas registradas
             lblKpiNumVentas.Text = ventas.Count.ToString();
 
-            // Llenar tabla de alerta de stock crítico
+            // 2. Gráfica de Barras por Categoría (Calcula el stock total disponible por categoría)
+            var paletaColores = new[]
+            {
+                Color.FromArgb(99, 102, 241),  // Indigo
+                Color.FromArgb(6, 182, 212),   // Cyan
+                Color.FromArgb(16, 185, 129),  // Esmeralda
+                Color.FromArgb(245, 158, 11),  // Ámbar
+                Color.FromArgb(236, 72, 153),  // Rosa
+                Color.FromArgb(139, 92, 246)   // Violeta
+            };
+
+            var datosPorCategoria = productos
+                .GroupBy(p => p.Categoria)
+                .Select((g, index) => new BarraDato
+                {
+                    Etiqueta = g.Key,
+                    Valor = g.Sum(p => p.Stock),
+                    ValorFormateado = $"{g.Sum(p => p.Stock)} unidades",
+                    ColorBarra = paletaColores[index % paletaColores.Length]
+                })
+                .OrderByDescending(b => b.Valor)
+                .ToList();
+
+            graficaBarras.CargarDatos(datosPorCategoria);
+
+            // 3. Gráfica de Dona: Porcentaje de productos con stock óptimo
+            float porcentajeSaludable = productos.Count > 0
+                ? ((productos.Count - criticos) * 100f / productos.Count)
+                : 100f;
+            graficaDona.PorcentajeOptimo = porcentajeSaludable;
+
+            // 4. Llenar tabla de alerta de stock bajo
             dgvDashboardStockBajo.Rows.Clear();
             foreach (var p in productos.Where(p => p.TieneStockBajo))
             {
-                int rowIndex = dgvDashboardStockBajo.Rows.Add(
+                dgvDashboardStockBajo.Rows.Add(
                     p.Codigo,
                     p.Nombre,
                     p.Categoria,
                     p.Stock,
                     p.StockMinimo,
-                    p.Stock == 0 ? "⚠️ AGOTADO - PEDIR URGENTE" : "⚠️ Stock Bajo - Reabastecer"
+                    p.Stock == 0 ? "Agotado" : "Stock Bajo"
                 );
-
-                // Destacar fila en tono suave de advertencia
-                dgvDashboardStockBajo.Rows[rowIndex].DefaultCellStyle.BackColor = Color.FromArgb(254, 242, 242);
-                dgvDashboardStockBajo.Rows[rowIndex].DefaultCellStyle.ForeColor = Color.FromArgb(185, 28, 28);
             }
         }
 
         // =========================================================================
-        // MÓDULO INVENTARIO: CARGA, FILTRADO Y CRUD DE PRODUCTOS
+        // MÓDULO INVENTARIO: CRUD Y FILTRADO
         // =========================================================================
 
-        /// <summary>
-        /// Llena la tabla de inventario con una lista filtrada o completa de productos.
-        /// </summary>
         private void CargarTablaProductos(IEnumerable<Producto> lista)
         {
             dgvProductos.Rows.Clear();
             foreach (var p in lista)
             {
                 string estado = p.Stock == 0 ? "Agotado" : (p.TieneStockBajo ? "Stock Bajo" : "Normal");
-                int idx = dgvProductos.Rows.Add(
+                dgvProductos.Rows.Add(
                     p.Codigo,
                     p.Nombre,
                     p.Categoria,
@@ -266,19 +351,9 @@ namespace WinFormsApp1
                     p.StockMinimo,
                     estado
                 );
-
-                // Resaltar en color si tiene stock bajo
-                if (p.TieneStockBajo)
-                {
-                    dgvProductos.Rows[idx].DefaultCellStyle.BackColor = Color.FromArgb(254, 242, 242);
-                    dgvProductos.Rows[idx].DefaultCellStyle.ForeColor = Color.FromArgb(185, 28, 28);
-                }
             }
         }
 
-        /// <summary>
-        /// Filtra la lista de productos en tiempo real según el texto de búsqueda y la categoría seleccionada.
-        /// </summary>
         private void FiltrarInventario()
         {
             string texto = txtBuscarProducto.Text.Trim().ToLower();
@@ -302,9 +377,6 @@ namespace WinFormsApp1
             CargarTablaProductos(filtrados);
         }
 
-        /// <summary>
-        /// Cuando el usuario hace click en una fila de la tabla, traslada los datos al formulario para editar.
-        /// </summary>
         private void DgvProductos_SelectionChanged(object? sender, EventArgs e)
         {
             if (dgvProductos.SelectedRows.Count > 0)
@@ -323,42 +395,26 @@ namespace WinFormsApp1
                     numStock.Value = prod.Stock;
                     numStockMinimo.Value = prod.StockMinimo;
 
-                    // Deshabilitar edición de código si ya existe
                     txtCodigo.Enabled = false;
                     btnGuardarProducto.Text = "🔄 Actualizar Producto";
                 }
             }
         }
 
-        /// <summary>
-        /// Guarda un nuevo producto o actualiza uno existente.
-        /// </summary>
         private void BtnGuardarProducto_Click(object? sender, EventArgs e)
         {
-            // Validaciones básicas de campos obligatorios
             if (string.IsNullOrWhiteSpace(txtCodigo.Text))
             {
-                MessageBox.Show("Por favor ingresa un código para el producto.", "Campo Requerido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor ingresa un código para el producto.", "Campo Obligatorio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtCodigo.Focus();
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
-                MessageBox.Show("Por favor ingresa un nombre para el producto.", "Campo Requerido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor ingresa una descripción para el producto.", "Campo Obligatorio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtNombre.Focus();
                 return;
-            }
-
-            if (numPrecioVenta.Value < numPrecioCompra.Value)
-            {
-                var confirm = MessageBox.Show(
-                    "El precio de venta es menor que el precio de compra. ¿Deseas guardarlo de todas formas?",
-                    "Advertencia de Margen",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question
-                );
-                if (confirm != DialogResult.Yes) return;
             }
 
             var prod = new Producto
@@ -373,15 +429,12 @@ namespace WinFormsApp1
             };
 
             GestorDatos.Instancia.GuardarOActualizarProducto(prod);
-            MessageBox.Show("¡Producto guardado exitosamente en el catálogo!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("¡Producto guardado exitosamente en el catálogo!", "Operación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             LimpiarFormularioProducto();
             RefrescarTodo();
         }
 
-        /// <summary>
-        /// Elimina el producto seleccionado tras confirmación del usuario.
-        /// </summary>
         private void BtnEliminarProducto_Click(object? sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtCodigo.Text))
@@ -408,9 +461,6 @@ namespace WinFormsApp1
             }
         }
 
-        /// <summary>
-        /// Limpia los campos del formulario de producto para permitir registrar uno nuevo.
-        /// </summary>
         private void LimpiarFormularioProducto()
         {
             txtCodigo.Clear();
@@ -426,12 +476,9 @@ namespace WinFormsApp1
         }
 
         // =========================================================================
-        // MÓDULO VENTAS: PUNTO DE VENTA, CARRITO Y FACTURACIÓN
+        // MÓDULO VENTAS (POS)
         // =========================================================================
 
-        /// <summary>
-        /// Llena el ComboBox de selección de productos para la venta.
-        /// </summary>
         private void CargarComboProductosVenta()
         {
             cmbVentaProducto.Items.Clear();
@@ -444,24 +491,25 @@ namespace WinFormsApp1
                 cmbVentaProducto.SelectedIndex = 0;
         }
 
-        /// <summary>
-        /// Actualiza los datos de precio y stock cuando el usuario cambia de producto en el ComboBox.
-        /// </summary>
         private void CmbVentaProducto_SelectedIndexChanged(object? sender, EventArgs e)
         {
             if (cmbVentaProducto.SelectedItem is Producto seleccionado)
             {
                 lblVentaPrecioUnitario.Text = $"Precio: ${seleccionado.PrecioVenta:N2}";
-                lblVentaStockDisponible.Text = $"Stock disponible: {seleccionado.Stock}";
+                lblVentaStockDisponible.Text = $"Stock disponible: {seleccionado.Stock} uds";
 
                 if (seleccionado.Stock <= 0)
                 {
-                    lblVentaStockDisponible.ForeColor = Color.Red;
-                    lblVentaStockDisponible.Text = "⚠️ AGOTADO (Sin existencias)";
+                    lblVentaStockDisponible.ForeColor = Color.FromArgb(239, 68, 68);
+                    lblVentaStockDisponible.Text = "⚠️ AGOTADO (Sin stock)";
+                }
+                else if (seleccionado.TieneStockBajo)
+                {
+                    lblVentaStockDisponible.ForeColor = Color.FromArgb(245, 158, 11);
                 }
                 else
                 {
-                    lblVentaStockDisponible.ForeColor = Color.FromArgb(100, 116, 139);
+                    lblVentaStockDisponible.ForeColor = Color.FromArgb(16, 185, 129);
                 }
 
                 numVentaCantidad.Maximum = Math.Max(1, seleccionado.Stock);
@@ -469,9 +517,6 @@ namespace WinFormsApp1
             }
         }
 
-        /// <summary>
-        /// Agrega el producto seleccionado y la cantidad deseada al carrito de venta.
-        /// </summary>
         private void BtnAgregarAlCarrito_Click(object? sender, EventArgs e)
         {
             if (cmbVentaProducto.SelectedItem is not Producto prod)
@@ -488,13 +533,12 @@ namespace WinFormsApp1
                 return;
             }
 
-            // Verificar si el producto ya está en el carrito para sumar la cantidad
             var itemExistente = _carritoActual.FirstOrDefault(i => i.CodigoProducto == prod.Codigo);
             int cantidadTotal = cantidad + (itemExistente?.Cantidad ?? 0);
 
             if (cantidadTotal > prod.Stock)
             {
-                MessageBox.Show($"La cantidad total solicitada ({cantidadTotal}) supera el stock disponible en bodega ({prod.Stock}).", "Stock Insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"La cantidad total solicitada ({cantidadTotal}) supera el stock disponible ({prod.Stock}).", "Stock Insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -516,9 +560,6 @@ namespace WinFormsApp1
             ActualizarTablaCarrito();
         }
 
-        /// <summary>
-        /// Elimina el ítem seleccionado del carrito de venta.
-        /// </summary>
         private void BtnQuitarDelCarrito_Click(object? sender, EventArgs e)
         {
             if (dgvCarrito.SelectedRows.Count > 0)
@@ -536,18 +577,12 @@ namespace WinFormsApp1
             }
         }
 
-        /// <summary>
-        /// Vacía por completo el carrito de compras actual.
-        /// </summary>
         private void VaciarCarrito()
         {
             _carritoActual.Clear();
             ActualizarTablaCarrito();
         }
 
-        /// <summary>
-        /// Refresca la tabla del carrito y recalcula los totales acumulados.
-        /// </summary>
         private void ActualizarTablaCarrito()
         {
             dgvCarrito.Rows.Clear();
@@ -569,21 +604,17 @@ namespace WinFormsApp1
             lblVentaTotal.Text = $"${total:N2}";
         }
 
-        /// <summary>
-        /// Procesa la venta, descuenta inventario, genera el recibo y limpia el carrito.
-        /// </summary>
         private void BtnCompletarVenta_Click(object? sender, EventArgs e)
         {
             if (_carritoActual.Count == 0)
             {
-                MessageBox.Show("El carrito de compras está vacío. Agrega productos antes de procesar la venta.", "Carrito Vacío", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("El carrito de compras está vacío. Agrega productos antes de procesar.", "Carrito Vacío", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             string cliente = string.IsNullOrWhiteSpace(txtVentaCliente.Text) ? "Consumidor Final" : txtVentaCliente.Text.Trim();
             string metodoPago = cmbVentaMetodoPago.SelectedItem?.ToString() ?? "Efectivo";
 
-            // Crear el objeto venta con número correlativo
             var nuevaVenta = new Venta
             {
                 IdVenta = $"VNT-{DateTime.Now:yyyyMMdd}-{GestorDatos.Instancia.Ventas.Count + 1:D4}",
@@ -593,38 +624,33 @@ namespace WinFormsApp1
                 Detalles = new List<DetalleVenta>(_carritoActual)
             };
 
-            // Registrar venta y descontar stock
             if (GestorDatos.Instancia.RegistrarVenta(nuevaVenta, out string error))
             {
                 MessageBox.Show(
-                    $"¡Venta registrada con éxito!\n\n" +
+                    $"🎉 ¡Venta procesada con éxito!\n\n" +
                     $"N° Recibo: {nuevaVenta.IdVenta}\n" +
                     $"Cliente: {nuevaVenta.Cliente}\n" +
                     $"Método de Pago: {nuevaVenta.MetodoPago}\n" +
                     $"Total Cobrado: ${nuevaVenta.TotalVenta:N2}",
-                    "Venta Procesada",
+                    "Venta Completada",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
                 );
 
-                // Limpiar carrito y reiniciar controles
                 VaciarCarrito();
                 txtVentaCliente.Text = "Consumidor Final";
                 RefrescarTodo();
             }
             else
             {
-                MessageBox.Show($"No fue posible completar la venta:\n{error}", "Error al procesar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"No fue posible completar la venta:\n{error}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         // =========================================================================
-        // MÓDULO HISTORIAL: AUDITORÍA DE TRANSACCIONES
+        // MÓDULO HISTORIAL
         // =========================================================================
 
-        /// <summary>
-        /// Llena la tabla de historial con todas las ventas realizadas ordenadas por fecha reciente.
-        /// </summary>
         private void CargarTablaHistorial()
         {
             dgvHistorialVentas.Rows.Clear();
@@ -644,9 +670,6 @@ namespace WinFormsApp1
             }
         }
 
-        /// <summary>
-        /// Refresca los datos en todos los módulos de la aplicación.
-        /// </summary>
         private void RefrescarTodo()
         {
             FiltrarInventario();
@@ -655,11 +678,7 @@ namespace WinFormsApp1
             CargarTablaHistorial();
         }
 
-        // =========================================================================
-        // MÉTODOS HEREDADOS DEL FORMULARIO ORIGINAL (COMPATIBILIDAD CON RAMAS)
-        // Se preservan para mantener compatibilidad con commits previos de git.
-        // =========================================================================
-
+        // Métodos preservados para compatibilidad
         private void Form1_Load(object sender, EventArgs e) { }
         private void listView1_SelectedIndexChanged(object sender, EventArgs e) { }
         private void label1_Click(object sender, EventArgs e) { }
