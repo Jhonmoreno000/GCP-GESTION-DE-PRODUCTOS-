@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Tipo de aplicación ejecutable para Windows -->
+    <OutputType>WinExe</OutputType>
+    
+    <!-- Versión de .NET para aplicaciones de escritorio en Windows -->
+    <TargetFramework>net8.0-windows</TargetFramework>
+    
+    <!-- Habilita el soporte completo para formularios de Windows (Windows Forms) -->
+    <UseWindowsForms>true</UseWindowsForms>
+    
+    <!-- Habilita tipos de referencia que admiten valores nulos para mayor seguridad -->
+    <Nullable>enable</Nullable>
+    
+    <!-- Importa automáticamente los espacios de nombres más comunes de .NET -->
+    <ImplicitUsings>enable</ImplicitUsings>
+    
+    <!-- Espacio de nombres raíz del proyecto según lo configurado en Form1.cs -->
+    <RootNamespace>WinFormsApp1</RootNamespace>
+    
+    <!-- Nombre del archivo ejecutable generado -->
+    <AssemblyName>GCP_GestionProductos</AssemblyName>
+  </PropertyGroup>
+
+</Project>

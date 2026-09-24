@@ -1,0 +1,14 @@
+## Carpetas de compilación de .NET
+bin/
+obj/
+
+## Archivos de usuario y cache de Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Datos locales generados por la app (si no se quieren commitear)
+productos.json
+ventas.json
