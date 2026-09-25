@@ -1,4 +1,4 @@
-# 📦 GCP - Gestión y Control de Productos
+#  GCP - Gestión y Control de Productos
 
 [![.NET Version](https://img.shields.io/badge/.NET-10.0%20%7C%208.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![C# Language](https://img.shields.io/badge/C%23-12.0-239120?style=for-the-badge&logo=csharp&logoColor=white)](https://learn.microsoft.com/dotnet/csharp/)
@@ -10,35 +10,35 @@
 
 ---
 
-## 🌟 Características Principales
+##  Características Principales
 
-### 📊 1. Dashboard Analítico Ejecutivo
+###  1. Dashboard Analítico Ejecutivo
 * **Gráfica Dual de Alto Impacto (63% / 37%)**:
-  * **📊 Gráfica de Barras de Stock**:
+  * ** Gráfica de Barras de Stock**:
     * Columnas verticales con gradientes dinámicos (Índigo `#4F46E5` para stock saludable, Rosa/Rojo `#F43F5E` para stock crítico).
     * Esquinas superiores redondeadas y badges flotantes con valor numérico exacto (`u.`).
     * Guías horizontales de cuadrícula con escala en el eje Y.
-    * **Línea de Umbral de Seguridad**: Marcador discontinuo en rojo destacando el límite de alerta (`⚠️ Límite Alerta 5 u.`).
-  * **🍩 Gráfica Donut (Anillo Circular)**:
-    * Segmentación porcentual de la salud del catálogo: `🟢 Stock Óptimo (>15 u.)`, `🟣 Stock Medio (6-15 u.)` y `🔴 Stock Crítico (≤5 u.)`.
+    * **Línea de Umbral de Seguridad**: Marcador discontinuo en rojo destacando el límite de alerta (` Límite Alerta 5 u.`).
+  * ** Gráfica Donut (Anillo Circular)**:
+    * Segmentación porcentual de la salud del catálogo: ` Stock Óptimo (>15 u.)`, ` Stock Medio (6-15 u.)` y ` Stock Crítico (≤5 u.)`.
     * Núcleo central con conteo total de artículos en vivo.
     * Leyenda interactiva inferior con tarjetas estilizadas y porcentaje calculado automáticamente.
 * **Tarjetas de Métricas KPI**:
-  * 💰 **Ingresos de Hoy**: Monto total acumulado en caja durante la jornada actual.
-  * ⚡ **Ventas Concretadas**: Contador en vivo de tickets emitidos hoy.
-  * 📦 **Artículos Activos**: Catálogo total de productos en inventario.
-  * ⚠️ **Stock Crítico**: Alertas prioritarias de productos con 5 o menos unidades.
+  *  **Ingresos de Hoy**: Monto total acumulado en caja durante la jornada actual.
+  *  **Ventas Concretadas**: Contador en vivo de tickets emitidos hoy.
+  *  **Artículos Activos**: Catálogo total de productos en inventario.
+  *  **Stock Crítico**: Alertas prioritarias de productos con 5 o menos unidades.
 
 ---
 
-### 📦 2. Catálogo de Productos y Control de Existencias (`FormCatalogo.cs`)
+###  2. Catálogo de Productos y Control de Existencias (`FormCatalogo.cs`)
 * Registro, edición y eliminación ágil de productos con validaciones de campos y precios.
 * Tabla `DataGridView` con cabeceras modernas en color Slate-900, selección de fila completa y visualización del total valorizado por producto.
 * Botonera con retroalimentación visual (`Guardar`, `Modificar`, `Eliminar`, `Limpiar`).
 
 ---
 
-### ⚡ 3. Punto de Venta / Caja Registradora (`FormVentas.cs`)
+###  3. Punto de Venta / Caja Registradora (`FormVentas.cs`)
 * Búsqueda y selección interactiva de artículos vía `ComboBox`.
 * Indicador dinámico del stock disponible que previene la sobreventa.
 * Control numérico de unidades (`NumericUpDown`) sincronizado con el inventario.
@@ -47,12 +47,12 @@
 
 ---
 
-### 🧾 4. Historial de Transacciones (`FormHistorial.cs`)
+###  4. Historial de Transacciones (`FormHistorial.cs`)
 * Auditoría completa de ventas procesadas con marca temporal (fecha y hora), cantidad de unidades despachadas e importe total recaudado.
 
 ---
 
-## 🎨 Diseño y Experiencia de Usuario (UI/UX)
+##  Diseño y Experiencia de Usuario (UI/UX)
 
 * **100% Nativo en Windows Forms**: Construido íntegramente con componentes de `System.Windows.Forms` y `System.Drawing.Drawing2D`, sin librerías externas de terceros que sobrecarguen el binario.
 * **Paleta de Colores SaaS Contemporánea**:
@@ -92,7 +92,7 @@ flowchart TD
     Dash <-->|Cálculo de Métricas & Gráficas| Datos
 ```
 
-### 📁 Estructura del Repositorio
+###  Estructura del Repositorio
 
 ```text
 ├── WinFormsApp1.slnx                     # Archivo de Solución de Visual Studio
@@ -116,7 +116,7 @@ flowchart TD
 
 ---
 
-## 💻 Requisitos del Sistema
+##  Requisitos del Sistema
 
 * **Sistema Operativo**: Windows 10 (versión 1903 o posterior) o Windows 11.
 * **Entorno de Ejecución**: [.NET 10.0 SDK](https://dotnet.microsoft.com/download) (o .NET 8.0 SDK).
@@ -124,7 +124,7 @@ flowchart TD
 
 ---
 
-## 🚀 Instalación y Ejecución
+##  Instalación y Ejecución
 
 ### Opción 1: Mediante CLI de .NET
 
