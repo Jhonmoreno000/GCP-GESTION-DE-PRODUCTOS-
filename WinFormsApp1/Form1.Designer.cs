@@ -29,6 +29,7 @@ namespace WinFormsApp1
             this.lblBrandSub = new System.Windows.Forms.Label();
             this.lblBrandTitle = new System.Windows.Forms.Label();
             this.pnlHeader = new System.Windows.Forms.Panel();
+            this.btnHeaderNuevaVenta = new System.Windows.Forms.Button();
             this.lblSystemStatus = new System.Windows.Forms.Label();
             this.lblSectionTitle = new System.Windows.Forms.Label();
             this.pnlMain = new System.Windows.Forms.Panel();
@@ -152,6 +153,8 @@ namespace WinFormsApp1
             this.btnNavDashboard.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNavDashboard.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnNavDashboard.FlatAppearance.BorderSize = 0;
+            this.btnNavDashboard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.btnNavDashboard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
             this.btnNavDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNavDashboard.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnNavDashboard.ForeColor = System.Drawing.Color.White;
@@ -172,6 +175,8 @@ namespace WinFormsApp1
             this.btnNavProductos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNavProductos.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnNavProductos.FlatAppearance.BorderSize = 0;
+            this.btnNavProductos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.btnNavProductos.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
             this.btnNavProductos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNavProductos.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnNavProductos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
@@ -192,6 +197,8 @@ namespace WinFormsApp1
             this.btnNavVentas.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNavVentas.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnNavVentas.FlatAppearance.BorderSize = 0;
+            this.btnNavVentas.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.btnNavVentas.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
             this.btnNavVentas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNavVentas.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnNavVentas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
@@ -212,6 +219,8 @@ namespace WinFormsApp1
             this.btnNavHistorial.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNavHistorial.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnNavHistorial.FlatAppearance.BorderSize = 0;
+            this.btnNavHistorial.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.btnNavHistorial.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
             this.btnNavHistorial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNavHistorial.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnNavHistorial.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
@@ -231,6 +240,7 @@ namespace WinFormsApp1
             // pnlHeader (Cabecera Superior Moderna)
             // 
             this.pnlHeader.BackColor = System.Drawing.Color.White;
+            this.pnlHeader.Controls.Add(this.btnHeaderNuevaVenta);
             this.pnlHeader.Controls.Add(this.lblSystemStatus);
             this.pnlHeader.Controls.Add(this.lblSectionTitle);
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -250,6 +260,25 @@ namespace WinFormsApp1
             this.lblSectionTitle.TabIndex = 0;
             this.lblSectionTitle.Text = "Dashboard General";
             // 
+            // btnHeaderNuevaVenta (Botón de Acción Rápida Responsivo)
+            // 
+            this.btnHeaderNuevaVenta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHeaderNuevaVenta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.btnHeaderNuevaVenta.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnHeaderNuevaVenta.FlatAppearance.BorderSize = 0;
+            this.btnHeaderNuevaVenta.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(56)))), ((int)(((byte)(202)))));
+            this.btnHeaderNuevaVenta.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(48)))), ((int)(((byte)(163)))));
+            this.btnHeaderNuevaVenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHeaderNuevaVenta.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.btnHeaderNuevaVenta.ForeColor = System.Drawing.Color.White;
+            this.btnHeaderNuevaVenta.Location = new System.Drawing.Point(535, 16);
+            this.btnHeaderNuevaVenta.Name = "btnHeaderNuevaVenta";
+            this.btnHeaderNuevaVenta.Size = new System.Drawing.Size(155, 38);
+            this.btnHeaderNuevaVenta.TabIndex = 1;
+            this.btnHeaderNuevaVenta.Text = "⚡ Nueva Venta";
+            this.btnHeaderNuevaVenta.UseVisualStyleBackColor = false;
+            this.btnHeaderNuevaVenta.Click += new System.EventHandler(this.btnHeaderNuevaVenta_Click);
+            // 
             // lblSystemStatus
             // 
             this.lblSystemStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -257,11 +286,11 @@ namespace WinFormsApp1
             this.lblSystemStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(253)))), ((int)(((byte)(245)))));
             this.lblSystemStatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblSystemStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
-            this.lblSystemStatus.Location = new System.Drawing.Point(705, 24);
+            this.lblSystemStatus.Location = new System.Drawing.Point(705, 22);
             this.lblSystemStatus.Name = "lblSystemStatus";
             this.lblSystemStatus.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
             this.lblSystemStatus.Size = new System.Drawing.Size(201, 25);
-            this.lblSystemStatus.TabIndex = 1;
+            this.lblSystemStatus.TabIndex = 2;
             this.lblSystemStatus.Text = "🟢 SISTEMA GCP EN LÍNEA";
 
             // 
@@ -604,6 +633,7 @@ namespace WinFormsApp1
         public System.Windows.Forms.Button btnNavHistorial;
         public System.Windows.Forms.Panel pnlHeader;
         public System.Windows.Forms.Label lblSectionTitle;
+        public System.Windows.Forms.Button btnHeaderNuevaVenta;
         public System.Windows.Forms.Label lblSystemStatus;
         public System.Windows.Forms.Panel pnlMain;
 

@@ -169,5 +169,30 @@ namespace WinFormsApp1
 
             MessageBox.Show($"✅ ¡Cobro procesado exitosamente por GCP!\nVenta #{nuevaVenta.Id} por un total de {nuevaVenta.Total:C}.", "Cobro Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void btnVentaQuitar_Click(object sender, EventArgs e)
+        {
+            if (dgvCarrito.CurrentRow?.DataBoundItem is ItemCarrito item)
+            {
+                DatosGCP.Carrito.Remove(item);
+                CalcularTotal();
+            }
+            else
+            {
+                MessageBox.Show("Selecciona un artículo de la canasta para quitar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnVentaVaciar_Click(object sender, EventArgs e)
+        {
+            if (DatosGCP.Carrito.Count == 0) return;
+
+            var confirm = MessageBox.Show("¿Deseas vaciar todos los artículos de la canasta actual?", "Vaciar Canasta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirm == DialogResult.Yes)
+            {
+                DatosGCP.Carrito.Clear();
+                CalcularTotal();
+            }
+        }
     }
 }

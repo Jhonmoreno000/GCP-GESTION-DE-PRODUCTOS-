@@ -53,5 +53,26 @@ namespace WinFormsApp1
             if (dgvHistorial.Columns["Total"] != null) dgvHistorial.Columns["Total"]!.DefaultCellStyle.Format = "C2";
             if (dgvHistorial.Columns["Fecha"] != null) dgvHistorial.Columns["Fecha"]!.DefaultCellStyle.Format = "g";
         }
+
+        private void btnHistorialRefrescar_Click(object sender, EventArgs e)
+        {
+            DatosGCP.Ventas.ResetBindings();
+            FormatearMoneda();
+        }
+
+        private void btnHistorialLimpiar_Click(object sender, EventArgs e)
+        {
+            if (DatosGCP.Ventas.Count == 0)
+            {
+                MessageBox.Show("No hay registros en el historial de ventas para vaciar.", "Historial Vacío", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var confirm = MessageBox.Show("¿Estás seguro de que deseas vaciar todos los registros del historial de ventas?", "Confirmar Vaciar Historial", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confirm == DialogResult.Yes)
+            {
+                DatosGCP.Ventas.Clear();
+            }
+        }
     }
 }

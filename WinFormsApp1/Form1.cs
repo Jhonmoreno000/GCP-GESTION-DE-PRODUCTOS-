@@ -165,6 +165,11 @@ namespace WinFormsApp1
             }
         }
 
+        private void btnHeaderNuevaVenta_Click(object sender, EventArgs e)
+        {
+            btnNav_Click(btnNavVentas, EventArgs.Empty);
+        }
+
         private void btnNav_MouseEnter(object sender, EventArgs e)
         {
             Button b = (Button)sender;

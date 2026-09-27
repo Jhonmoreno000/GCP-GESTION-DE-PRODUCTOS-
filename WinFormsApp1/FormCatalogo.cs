@@ -156,5 +156,11 @@ namespace WinFormsApp1
                 txtProdCantidad.Text = prod.Cantidad.ToString();
             }
         }
+
+        private void btnProdRefrescar_Click(object sender, EventArgs e)
+        {
+            DatosGCP.Productos.ResetBindings();
+            FormatearMoneda();
+        }
     }
 }
