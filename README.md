@@ -38,7 +38,7 @@ Combina la solidez y velocidad del runtime nativo de Windows con estándares con
   * ` Editar` (Índigo `#4F46E5` | Hover `#4338CA`)
   * ` Eliminar` (Carmín/Rojo `#EF4444` | Hover `#DC2626`)
   * ` Limpiar` (Pizarra `#64748B` | Hover `#475569`)
-* **Botón de Cabecera Dinámico**: `btnProdRefrescar` ("🔄 Actualizar Tabla") con `Anchor = Top | Right`.
+* **Botón de Cabecera Dinámico**: `btnProdRefrescar` (" Actualizar Tabla") con `Anchor = Top | Right`.
 * **Entradas Auto-Escalables**: Cajas de texto con anclaje horizontal (`Anchor = Top | Left | Right`).
 
 ---
@@ -177,6 +177,3 @@ dotnet run --project WinFormsApp1
 
 ---
 
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia [MIT](LICENSE) - libre para uso académico, comercial o de desarrollo.
