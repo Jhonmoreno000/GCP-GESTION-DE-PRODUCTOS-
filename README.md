@@ -1,4 +1,4 @@
-# 📦 GCP - Gestión y Control de Productos
+# GCP - Gestión y Control de Productos
 
 [![.NET Version](https://img.shields.io/badge/.NET-10.0%20%7C%208.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![C# Language](https://img.shields.io/badge/C%23-12.0-239120?style=for-the-badge&logo=csharp&logoColor=white)](https://learn.microsoft.com/dotnet/csharp/)
@@ -13,68 +13,68 @@ Combina la solidez y velocidad del runtime nativo de Windows con estándares con
 
 ---
 
-## 🌟 Módulos y Características
+##  Módulos y Características
 
-### 📊 1. Dashboard Ejecutivo & Analíticas Duales
+###  1. Dashboard Ejecutivo & Analíticas Duales
 * **Gráfica de Barras de Stock**:
   * Renderizado vectorial GDI+ con columnas verticales y gradientes dinámicos (Índigo `#4F46E5` para stock suficiente, Rosa/Rojo `#F43F5E` para stock bajo).
   * Esquinas superiores redondeadas y etiquetas flotantes de cantidad numérica (`u.`).
-  * Cuadrícula con escalas numéricas y **línea horizontal de advertencia** (`⚠️ Límite Alerta 5 u.`).
+  * Cuadrícula con escalas numéricas y **línea horizontal de advertencia** (` Límite Alerta 5 u.`).
 * **Gráfica Donut (Anillo Circular)**:
-  * Segmentación proporcional del estado del inventario: `🟢 Stock Óptimo (>15)`, `🟣 Stock Medio (6-15)` y `🔴 Stock Crítico (≤5)`.
+  * Segmentación proporcional del estado del inventario: ` Stock Óptimo (>15)`, ` Stock Medio (6-15)` y ` Stock Crítico (≤5)`.
   * Núcleo interactivo con conteo centralizado y leyenda porcentual inferior con tarjetas de colores.
 * **Tarjetas KPI en Tiempo Real**:
-  * 💰 **Ingresos de Hoy**: Total acumulado en ventas procesadas durante el día.
-  * ⚡ **Ventas Concretadas**: Contador de recibos/facturas emitidas en vivo.
-  * 📦 **Artículos Activos**: Catálogo total de referencias registradas.
-  * ⚠️ **Stock Crítico**: Alerta de productos que requieren reposición urgente.
+  *  **Ingresos de Hoy**: Total acumulado en ventas procesadas durante el día.
+  *  **Ventas Concretadas**: Contador de recibos/facturas emitidas en vivo.
+  *  **Artículos Activos**: Catálogo total de referencias registradas.
+  *  **Stock Crítico**: Alerta de productos que requieren reposición urgente.
 
 ---
 
-### 📦 2. Catálogo de Productos (`FormCatalogo.cs`)
+###  2. Catálogo de Productos (`FormCatalogo.cs`)
 * **Distribución Responsiva Proporcional**: Contenedor maestro `TableLayoutPanel` (35% Formulario de Entrada / 65% Tabla de Catálogo).
 * **Botonera Táctil en Matriz 2x2**: Dispuesta en `TableLayoutPanel` al 50%/50% con `Dock = Fill` y altura ergonómica de 44px:
-  * `➕ Guardar` (Verde Esmeralda `#10B981` | Hover `#059669`)
-  * `✏️ Editar` (Índigo `#4F46E5` | Hover `#4338CA`)
-  * `🗑️ Eliminar` (Carmín/Rojo `#EF4444` | Hover `#DC2626`)
-  * `🧹 Limpiar` (Pizarra `#64748B` | Hover `#475569`)
+  * ` Guardar` (Verde Esmeralda `#10B981` | Hover `#059669`)
+  * ` Editar` (Índigo `#4F46E5` | Hover `#4338CA`)
+  * ` Eliminar` (Carmín/Rojo `#EF4444` | Hover `#DC2626`)
+  * ` Limpiar` (Pizarra `#64748B` | Hover `#475569`)
 * **Botón de Cabecera Dinámico**: `btnProdRefrescar` ("🔄 Actualizar Tabla") con `Anchor = Top | Right`.
 * **Entradas Auto-Escalables**: Cajas de texto con anclaje horizontal (`Anchor = Top | Left | Right`).
 
 ---
 
-### ⚡ 3. Punto de Venta / Caja Registradora (`FormVentas.cs`)
+###  3. Punto de Venta / Caja Registradora (`FormVentas.cs`)
 * **Distribución Responsiva**: `TableLayoutPanel` (38% Módulo de Cobro / 62% Canasta de Compras).
 * **Control de Stock y Prevención de Sobreventa**: Menú desplegable interactivo sincronizado con el inventario en almacén; impide añadir cantidades superiores a las existencias reales.
-* **Fila de Adición Fluida**: Grid responsive con caja numérica y botón `➕ Añadir` (38px de altura, `Dock = Fill`).
-* **Botón de Cobro de Alto Impacto**: `btnVentaCobrar` ("💳 Procesar Cobro") con 54px de altura, ancho total al 100% de la tarjeta, feedback visual al presionar y deducción automática del stock.
+* **Fila de Adición Fluida**: Grid responsive con caja numérica y botón ` Añadir` (38px de altura, `Dock = Fill`).
+* **Botón de Cobro de Alto Impacto**: `btnVentaCobrar` (" Procesar Cobro") con 54px de altura, ancho total al 100% de la tarjeta, feedback visual al presionar y deducción automática del stock.
 * **Controles Rápidos de Canasta**:
-  * `🗑️ Quitar Item` (`Anchor = Top | Right`)
-  * `🔄 Vaciar Canasta` (`Anchor = Top | Right`)
+  * ` Quitar Item` (`Anchor = Top | Right`)
+  * ` Vaciar Canasta` (`Anchor = Top | Right`)
 
 ---
 
-### 🧾 4. Registro Histórico de Ventas (`FormHistorial.cs`)
+###  4. Registro Histórico de Ventas (`FormHistorial.cs`)
 * Auditoría completa y transparente de transacciones: Número de ticket, marca temporal (`Fecha y Hora`), volumen de artículos despachados y monto total facturado.
 * **Botones de Control Superior**:
-  * `🔄 Actualizar` (`btnHistorialRefrescar`)
-  * `🗑️ Vaciar Historial` (`btnHistorialLimpiar`) con modal de confirmación de seguridad.
+  * ` Actualizar` (`btnHistorialRefrescar`)
+  * ` Vaciar Historial` (`btnHistorialLimpiar`) con modal de confirmación de seguridad.
   * Anclados a la derecha (`Anchor = Top | Right`), conservando alineación perfecta sin importar la resolución.
 
 ---
 
-### 🚀 5. Shell Principal y Navegación (`Form1.cs`)
+###  5. Shell Principal y Navegación (`Form1.cs`)
 * **Barra Lateral SaaS**: Fondo Slate-900 (`#0F172A`) con botones de navegación de 54px de altura, estados hover interactivos y cursor táctil.
 * **Indicador Deslizante Suave**: Puntero animado en tiempo real a 60 FPS controlado por `Timer`.
-* **Botón CTA de Cabecera**: `btnHeaderNuevaVenta` ("⚡ Nueva Venta") anclado a la derecha en la barra superior junto al estado del sistema, permitiendo abrir el terminal de venta desde cualquier módulo.
+* **Botón CTA de Cabecera**: `btnHeaderNuevaVenta` (" Nueva Venta") anclado a la derecha en la barra superior junto al estado del sistema, permitiendo abrir el terminal de venta desde cualquier módulo.
 
 ---
 
-## 🎨 Arquitectura de Diseño Responsivo y Compatibilidad
+##  Arquitectura de Diseño Responsivo y Compatibilidad
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│  Form1: Header Superior Blanco con Anclaje Derecho [⚡ Nueva Venta]    │
+│  Form1: Header Superior Blanco con Anclaje Derecho [ Nueva Venta]    │
 ├───────────────┬────────────────────────────────────────────────────────┤
 │  Sidebar      │  Área de Trabajo Dinámica (Dock = Fill)                │
 │  (Slate-900)  ├────────────────────────────────────────────────────────┤
@@ -82,7 +82,7 @@ Combina la solidez y velocidad del runtime nativo de Windows con estándares con
 │  - Dashboard  │  ┌───────────────────────┬───────────────────────────┐ │
 │  - Catálogo   │  │ Panel Entradas (35%)  │ Panel Tabla Grid (65%)    │ │
 │  - TPV Venta  │  │ Botonera en Grid 2x2  │ Botones Anclados Derecha  │ │
-│  - Historial  │  │ [Guardar]   [Editar]  │ [🔄 Actualizar Tabla]     │ │
+│  - Historial  │  │ [Guardar]   [Editar]  │ [ Actualizar Tabla]     │ │
 │               │  │ [Eliminar]  [Limpiar] │ DataGridView Full Height  │ │
 │               │  └───────────────────────┴───────────────────────────┘ │
 └───────────────┴────────────────────────────────────────────────────────┘
@@ -98,7 +98,7 @@ Combina la solidez y velocidad del runtime nativo de Windows con estándares con
 
 ---
 
-## 🏛️ Diagrama de Componentes
+## Diagrama de Componentes
 
 ```mermaid
 flowchart TD
@@ -124,7 +124,7 @@ flowchart TD
 
 ---
 
-## 📁 Estructura del Código
+##  Estructura del Código
 
 ```text
 ├── WinFormsApp1.slnx                     # Solución de Visual Studio 2022
@@ -146,7 +146,7 @@ flowchart TD
 
 ---
 
-## 💻 Requisitos del Entorno
+##  Requisitos del Entorno
 
 * **Sistema Operativo**: Windows 10 (1903+) o Windows 11.
 * **SDK de .NET**: [.NET 10.0 SDK](https://dotnet.microsoft.com/download) (compatible con .NET 8.0).
@@ -154,7 +154,7 @@ flowchart TD
 
 ---
 
-## 🚀 Compilación y Ejecución
+##  Compilación y Ejecución
 
 ### Opción 1: Desde la Terminal (CLI)
 ```bash
